@@ -1,0 +1,80 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.ride-booking-records{
+    background-color: $white;
+    width: 100%;
+    padding: 1.5em 0;
+    .ride-list{
+        width: 90%;
+        max-width: 1100px;
+        margin: auto;
+        .detail-card{
+            background-color: $white;
+            padding: 1em;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px 2px $black-faint4;
+            margin-bottom: 1.5em;
+            .outer-spread{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .inner-spread{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .image-holder{
+                        width: 90px;
+                        height: 90px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 10px;
+                        border: 0.7px solid #D3A68D;
+                        .airline-image{
+                            width: 80px;
+                            height: 80px;
+                            border-radius: 6px;
+                            // border: 0.7px solid #D3A68D;
+                            // background-color: #D3A68D;
+                            overflow: hidden;
+                            background-size: contain;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                        }
+                    }
+                    .ride-time{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 1em;
+                    }
+                    .icon-holder{
+                        background-color: #F6F0EB;
+                        border-radius: 5px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #D3A68D;
+                    }
+                    .space-left{
+                        padding-left: 0.7em;
+                    }
+                    .space-right{
+                        padding-right: 0.7em;
+                    }
+                    @include mediaM(630px){
+                        display: block;
+                        .image-holder{
+                            margin: auto;
+                        }
+                    }
+                }
+                @include mediaM(990px){
+                    display: block;
+                }
+            }
+        }
+    }
+}

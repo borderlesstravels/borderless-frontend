@@ -1,0 +1,21 @@
+@import "../../../../../assets/styles/variables.scss";
+
+.publish-property{
+    background-color: #F9F5FA;
+    width: 100%;
+    padding: 2em 0 4em;
+    border-radius: 2em;
+    .submit-grid{
+        width: 92%;
+        max-width: 400px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        .button-holders{
+            padding: 0 1em;
+            button{
+                width: 100%;
+            }
+        }
+    }
+}

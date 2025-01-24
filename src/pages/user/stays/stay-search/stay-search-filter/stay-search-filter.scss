@@ -1,0 +1,53 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.filter-holder{
+    .filter{
+        hr{
+            color: $black-faint2;
+        }
+    }
+    .opened-filter{
+        @include mediaM(991px){
+            transition: 0.4s ease;
+            max-height: 1000px;
+        }
+    }
+    .closed-filter{
+        @include mediaM(991px){
+            transition: 0.4s ease;
+            max-height: 0px;
+            overflow: hidden;
+        }
+    }
+    .category-tabs{
+        display: grid;
+        grid-template-columns: 32% 2% 32% 2% 32%;
+        box-shadow: 0 1px 5px 0 $black-faint4;
+        border-radius: 3px;
+        padding: 0 4px;
+        margin-bottom: 1.5em;
+        .splitter{
+            width: 1px;
+            height: 30px;
+            background-color: #E8D7EE;
+        }
+        .category-tab{
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            p{
+                font-size: 0.75em;
+                opacity: 0.6;
+            }
+        }
+        .active{
+            border-bottom: 5px solid $purple-bg;
+        }
+    }
+    .pad-web{
+        @include mediaW(992px){
+            padding-left: 0.7em;
+        }
+    }
+}

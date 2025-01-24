@@ -1,0 +1,84 @@
+@import '../../../assets/styles/variables.scss';
+
+.incremental-count{
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .change{
+        width: 20px;
+        height: 20px;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid $black-faint2;
+        cursor: pointer;
+        transition: 0.2s ease;
+        .change-icon{
+            color: $black-faint2;
+            transition: 0.3s ease;
+            font-size: 0.8em;
+        }
+        &:hover{
+            border-color: $black-faint1;
+            .change-icon{
+                color: $black-faint1;
+            }
+        }
+        &:active{
+            transform: scale(1.1);
+        }
+    }
+    .hold-update{
+        padding-left: 1.2em;
+        button{
+            @include base-button($purple-bg, $purple-bg-hover);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+    }
+}
+.increased-counts{
+    .change{
+        width: 50px;
+        height: 50px;
+        border-radius: 6px;
+        .change-icon{
+            color: $black-faint3;
+        }
+    }
+    .hold-update{
+        padding-left: 2em;
+        button{
+            padding: 6px 13px;
+            border-radius: 6px;
+            font-size: 1.05em;
+        }
+    }
+}
+
+.vertical-count{
+    flex-direction: column;
+    span{
+        padding: 0.3em;
+    }
+}
+.forced-white{
+    .change{
+        color: $white-faint1;
+        border-color: $white-faint1;
+        .change-icon{
+            color: $white-faint1;
+        }
+        &:hover{
+            color: $white;
+            border-color: $white;
+            .change-icon{
+                color: $white;
+            }
+        }
+    }
+}

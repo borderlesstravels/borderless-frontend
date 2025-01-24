@@ -1,0 +1,42 @@
+@import "../../../../assets/styles/variables.scss";
+
+
+.why-sky-rewards{
+    background-color: #FBF7FC;
+    width: 100%;
+    padding: 5em 0 2em;
+    .reason-card{
+        padding: 5px;
+        display: grid;
+        grid-template-columns: 60px auto;
+        transition: 0.3s ease;
+        border-radius: 10px;
+        column-gap: 1em;
+        max-width: 600px;
+        margin: 1.5em 0;
+        .number-card{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            width: 60px;
+            background-color: rgba(255, 186, 10, 0.2);
+            border-radius: 50%;
+            color: $orange;
+            margin-top: 2em;
+        }
+        h4{
+            color: $purple-bg;
+            font-weight: 700;
+            padding-top: 6px;
+        }
+        p{
+            color: $black-faint1;
+            font-size: 0.95em;
+        }
+        &:hover{
+            background-color: $white;
+            box-shadow: 0 10px 20px 0 rgba(56, 0, 146, 0.25);
+        }
+    }
+}

@@ -1,0 +1,36 @@
+@import '../../../assets/styles/variables.scss';
+
+.edit-post-modal{
+    .input-grp{
+        padding-top: 0.9em;
+        label{
+            font-weight: 700;
+            font-size: 0.7em;
+            margin-bottom: 0;
+        }
+        input, textarea, select{
+            width: 100%;
+            border-radius: 8px;
+            padding: 5px 15px;
+            border: 1px solid $primary-blue-hover-faint3;
+            box-shadow: 0 4px 8px -3px $black-faint4;
+            transition: 0.3s ease;
+            background-color: $white;
+            &:focus{
+            outline: none;
+            border-color: $primary-blue;
+            box-shadow: 0 4px 8px 0 $black-faint3;
+            }
+
+        }
+        input[type=file]{
+            padding: 2px 15px;
+            &::-webkit-file-upload-button {
+            visibility: hidden;
+            }
+        }
+        select{
+            padding: 7px 15px;
+        }
+    }
+}

@@ -1,0 +1,64 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.signup-page{
+    background-color: $white;
+    width: 100%;
+    padding: 1em 0 5em;
+    .hold-grid{
+        width: 92%;
+        margin: auto;
+        min-height: calc(100vh - 70px);
+        position: relative;
+        display: grid;
+        grid-template-columns: 55% 45%;
+        border-radius: 2em;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        padding: 5vmax;
+        @include mediaM(991px){
+            grid-template-columns: 65% 35%;
+        }
+        @include mediaM(850px){
+            display: block;
+        }
+        .content-sect{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            height: 100%;
+            .content-holder{
+                width: 95%;
+                @include mediaM(850px){
+                    width: 100%;
+                }
+            }
+            @include mediaM(850px){
+                justify-content: center;
+            }
+        }
+        .image-sect{
+            height: 100%;
+            background-image: url(../../../assets/images/side-img-signup.jpg);
+            background-position: center;
+            background-size: cover;
+            border-radius: 1.2em;
+        }
+        @include mediaM(850px){
+            min-height: calc(100vh - 80px);
+            .content-sect{
+                min-height: calc(100vh - 80px - 10vmax);
+            }
+        }
+        @include mediaM(550px){
+            min-height: calc(100vh - 160px);
+            padding: 5vmax 1vmax;
+            .content-sect{
+                min-height: calc(100vh - 160px - 10vmax);
+            }
+        }
+    }
+    @include mediaM(550px){
+        padding: 3em 0 5em;
+    }
+}

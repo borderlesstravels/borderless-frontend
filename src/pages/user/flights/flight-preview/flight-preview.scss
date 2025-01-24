@@ -1,0 +1,159 @@
+@import "../../../../assets/styles/variables.scss";
+
+
+.flight-preview{
+    background-color: $white;
+    width: 100%;
+    padding: 5vh 0 9vh;
+    .preview-sect{
+        background-color: #FBFAFC;
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+        padding: calc(4vw);
+        border-radius: 1em;
+        .save-flight{
+            // height: 50px;
+            width: 40px;
+            border-radius: 4px;
+            border: 1px solid $purple-bg;
+            transition: 0.3s ease;
+            .save-icon{
+                color: $purple-bg
+            }
+            &:hover{
+                background-color: $purple-bg;
+                .save-icon{
+                    color: $white
+                }
+            }
+        }
+        .flight-button{
+            @include base-button($purple-bg, $purple-bg-hover);
+            font-size: 0.9em;
+            font-weight: 600;
+            padding: 8px 21px;
+            width: 100%;
+            border-radius: 4.5px;
+            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            .icon{
+                font-size: 0.9em;
+            }
+        }
+        .preview-image{
+            width: 100%;
+            img{
+                width: 100%;
+                border-radius: 12px;
+                box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            }
+        }
+        .cabin-type-indicator{
+            font-size: 0.8em;
+            padding: 0.1em 0.5em;
+            input{
+                margin-right: 0.7em;
+                transform: scale(1.5);
+                &:checked{
+                    accent-color: $orange;
+                }
+            }
+            @include mediaM(920px){
+                padding-top: 0.6em;
+            }
+        }
+        .policy-card{
+            background-color: #DEC3E7;
+            padding: 0.7em 1.1em;
+            border-radius: 8px;
+        }
+        .trip-card, .summary-card{
+            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            padding: 1.1em;
+            border-radius: 12px;
+            .airline-badge{
+                border-radius: 5px;
+                border: 1px solid #8DD3BB;
+                display: grid;
+                grid-template-columns: 20% 4% 74%;
+                padding: 10px;
+                max-width: 250px;
+            }
+            .split{
+                width: 1px;
+                height: 20px;
+                background-color: $black-faint3;
+                margin: 0 1.2em;
+                @include mediaM(920px){
+                    margin: 0.4em 0.7em
+                }
+            }
+            .trip-icon{
+                width: 160px;
+                img{
+                    width: 100%;
+                }
+                @include mediaM(750px){
+                    width: 50px;
+                    height: 2px;
+                    background-color: $black-faint2;
+                    img{
+                        display: none;
+                    }
+                }
+            }
+        }
+        .summary-card{
+            position: relative;
+            .hanger{
+                position: absolute;
+                left: 0;
+                top: -20vh;
+                width: 3px;
+                height: 3px;
+                background-color: chartreuse;
+            }
+        }
+    }
+}
+
+.error-box{
+    .cancel{
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: 0.2s ease;
+      border: 1px solid #E8E9EA;
+      font-size: 0.85em;
+      box-shadow: 0 1px 10px 0 $black-faint4;
+      background-color: $white;
+      &:hover{
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+        border-color: #f3a4cb;
+      }
+      &:active{
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.3);
+      }
+    }
+    .confirmation-button{
+        padding: 10px 25px;
+        background-image: linear-gradient(to left, #C957DB, rgba(28, 12, 31, 0.79));
+        border-radius: 8px;
+        transition: 0.2s ease;
+        border: none;
+        color: white;
+        font-weight: 600;
+        font-size: 0.85em;
+        box-shadow: 0 1px 6px 2px $black-faint3;
+        &:hover{
+          filter: brightness(80%);
+          color: white;
+        }
+        &:focus{
+          outline: none;
+        }
+        &:disabled{
+          background-image: linear-gradient(to left, #5d1368, rgba(0, 0, 0, 0.89));
+          color: white;
+        }
+    }
+}

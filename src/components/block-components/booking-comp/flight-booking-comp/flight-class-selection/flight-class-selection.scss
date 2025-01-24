@@ -1,0 +1,86 @@
+@import '../../../../../assets/styles/variables.scss';
+
+.selector{
+    .reduced-info{
+        @include mediaW(751px){
+            font-size: 0.8em;
+            padding: 0.2em 0;
+        }
+    }
+}
+
+.flight-class-case{
+    .separator{
+        height: 2px;
+        width: 100%;
+        background-color: $black-faint3;
+        margin: 1.4em 0;
+    }
+    @include mediaW(751px){
+        min-width: 600px;
+        display: grid;
+        grid-template-columns: 50% 2px 50%;
+        padding: 1.5em 0.0em;
+        .separator{
+            height: 100%;
+        }
+    }
+    .sect-holder{
+        padding: 0 1.5em;
+        .label{
+            padding: 6px;
+            background-color: #FDEFFF;
+            color: $primary-blue;
+            font-size: 1.1em;
+            margin-bottom: 1em;
+        }
+    }
+    .passenger-sect{
+        display: grid;
+        grid-template-columns: auto 70px;
+        padding: 8px 3px;
+        .icon-holder{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .clicker-container{
+            width: 100px;
+        }
+        @include mediaW(751px){
+            span{
+                font-size: 0.85em;
+            }
+        }
+    }
+    .flight-class-sect{
+        display: grid;
+        grid-template-columns: 40px auto;
+        padding: 8px 3px;
+        cursor: pointer;
+        border-radius: 3px;
+        input[type="radio"]{
+            padding-top: 9em;
+            &:checked{
+                color: chartreuse;
+            }
+        }
+        .span{
+            opacity: 0.7;
+        }
+        @include mediaW(751px){
+            span{
+                font-size: 0.85em;
+            }
+        }
+    }
+    .selected{
+        background-color: $purple-bg;
+        span{
+            color: $white;
+        }
+        input{
+            border-top: chartreuse;
+        }
+    }
+}

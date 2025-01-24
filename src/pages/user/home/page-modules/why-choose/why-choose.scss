@@ -1,0 +1,40 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.why-choose{
+    background-color: #FBF7FC;
+    width: 100%;
+    padding: 5em 0 2em;
+    .reason-card{
+        padding: 5px;
+        display: grid;
+        grid-template-columns: 60px auto;
+        transition: 0.3s ease;
+        border-radius: 10px;
+        column-gap: 1em;
+        max-width: 450px;
+        margin: 1.5em 0;
+        .icon-card{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            border-radius: 13px;
+            background-color: $white;
+            margin-top: 2em;
+        }
+        h4{
+            color: $orange;
+            font-weight: 700;
+            padding-top: 6px;
+        }
+        p{
+            color: $black-faint1;
+            font-size: 0.85em;
+        }
+        &:hover{
+            background-color: $white;
+            box-shadow: 0 10px 20px 0 rgba(56, 0, 146, 0.25);
+        }
+    }
+}

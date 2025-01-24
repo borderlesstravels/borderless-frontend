@@ -1,0 +1,22 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.flight-payment{
+    background-color: $white;
+    width: 100%;
+    padding: 6vh 0 6vh;
+    color: $white;
+    position: relative;
+    // background-image: url(../../../../assets/images/flight-banner-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    // margin: 0 0 -12vh;
+    p{
+        color: $black-faint1;
+    }
+
+    .paystack-button {
+        @include base-button($purple-bg, $purple-bg-hover, $black-faint2, $black-faint1);
+        padding: 0.4em 1em;
+    }
+}

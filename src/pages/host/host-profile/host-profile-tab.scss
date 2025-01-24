@@ -1,0 +1,136 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.host-holder{
+    width: 90%;
+    margin: auto;
+    padding: 2em 0;
+    .host-main-grid{
+        display: grid;
+        grid-template-columns: 30% 70%;
+        margin: 0 -0.5em;
+        .main-sect{
+            padding: 0 0.5em;
+        }
+        .h-balance{
+            @include mediaW(1151px){
+                min-height: 172px;
+            }
+        }
+        .profile-tab-card{
+            background-image: url(../../../assets/images/profile-Pattern.jpg);
+            background-size: cover;
+            background-position: center;
+            border-radius: 1.3em;
+            padding: 1.3em;
+            color: $white;
+            p, h6, h5, h4, h3{
+                color: $white;
+            }
+            box-shadow: 0 20px 40px 0 rgba(4, 8, 118, 0.25);
+            margin: 1em 0;
+            .profile-image{
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+                border: 3px solid $white;
+                background-color: #999999;
+                margin-right: 0.8em;
+                position: relative;
+                @include mediaW(751px){
+                    width: 90px;
+                    height: 90px;
+                    margin-right: 0.6em;
+                }
+                img{
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    overflow: hidden;
+                }
+                .edit{
+                    position: absolute;
+                    top: -0.6em;
+                    right: -0.6em;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 2em;
+                    height: 2em;
+                    border-radius: 50%;
+                    background-color: rgb(100, 149, 237);
+                    border: 1px $black-faint3 solid;
+                    transition: 0.3s ease;
+                    cursor: pointer;
+                    &:hover{
+                        background-color: rgb(73, 111, 180);
+                    }
+                    &:active{
+                        transform: scale(1.1);
+                    }
+                    input{
+                        display: none;
+                    }
+                }
+            }
+            .tab-grid{
+                display: grid;
+                grid-template-columns: 23% 23% 31% 23%;
+                @include mediaM(850px){
+                    grid-template-columns: 50% 50%;
+                }
+            }
+        }
+        .tab-button-sect{
+            padding: 0.3em 0.7em 0.3em 0;
+            button{
+                width: 100%;
+                padding: 5px;
+                text-align: center;
+                border-radius: 0.4em;
+                background: rgba(0, 121, 191, 0);
+                border: 1px solid $white;
+                color: $white;
+                transition: 0.3s ease;
+                &:hover{
+                    border-color: $secondary-blue;
+                    background-color: $secondary-blue;
+                }
+                &:active{
+                    border-color: $secondary-blue-hover;
+                    background-color: $secondary-blue-hover;
+                    transform: translateY(3px) scale(1.05);
+                }
+            }
+        }
+        .active-tab{
+            button{
+                background-color: $secondary-blue;
+                border-color: $secondary-blue;
+                &:hover{
+                    border-color: $secondary-blue-hover;
+                    background-color: $secondary-blue-hover;
+                }
+                &:active{
+                    border-color: $black;
+                    background-color: $black;
+                }
+            }
+        }
+        @include mediaM(1150px){
+            display: block;
+        }
+    }
+}
+.action-popup{
+    .accept-button{
+        @include base-button($purple-bg, $purple-bg-hover);
+        border-radius: 6px;
+        padding: 4px;
+    }
+    .reject-button{
+        @include base-hollow-button($red, $red-hover);
+        border-radius: 6px;
+        padding: 4px;
+    }
+}

@@ -1,0 +1,60 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.properties{
+    background-color: #FBF7FC;
+    width: 100%;
+    padding: 3em 0 3em;
+    position: relative;
+    .side-margin{
+        padding: 0 0 0 15%;
+        @include mediaM(767px){
+            padding: 0;
+        }
+    }
+    .deal-case{
+        // width: 100%;
+        // max-width: 250px;
+        margin: 0.3em;
+        .deal-card{
+            width: 90%;
+            max-width: 280px;
+            margin: auto;
+            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+    
+            .title{
+                position: absolute;
+                width: 100%;
+                left: 0;
+                bottom: 0;
+                padding: 0 7% 0.9em;
+                h6{
+                    color: $white;
+                    font-weight: 700;
+                    font-size: 1.1em;
+                }
+            }
+        }
+    }
+    .swiper-pagination-bullet {
+        background-color: #bdbdbd !important;
+        opacity: 1;
+        width: 10px;
+        height: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        font-size: 0.01em;
+        transition: 0.3s ease;
+    
+        // style for active pagination btn
+        &.swiper-pagination-bullet-active {
+            background-color: #ED6300 !important;
+            width: 10px !important;
+        }
+    }
+}

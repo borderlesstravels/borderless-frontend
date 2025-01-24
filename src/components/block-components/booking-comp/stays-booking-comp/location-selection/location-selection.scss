@@ -1,0 +1,37 @@
+@import '../../../../../assets/styles/variables.scss';
+
+.location-case{
+    width: 100%;
+    // @include mediaW(750px){
+    //     width: 500px;
+    // }
+    // @include mediaW(1000px){
+    //     width: 450px;
+    // }
+    .location-selection{
+        width: 100%;
+        position: relative;
+        .label{
+            position: absolute;
+            padding: 0 0.3em;
+            background: $white;
+            left: 5%;
+            top: -0.8em;
+            font-size: 0.7em;
+            z-index: 2;
+        }
+        .type-box{
+            input{
+                // padding: 0.6em 0.9em;
+                padding: 0;
+                cursor: pointer;
+                transition: 0.3s ease;
+                border: none;
+                box-shadow: none;
+            }
+        }
+    }
+    .confirm-location-button{
+        @include base-button($purple-bg, $purple-bg-hover);
+    }
+}

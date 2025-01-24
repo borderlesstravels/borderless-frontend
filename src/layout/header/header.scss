@@ -1,0 +1,126 @@
+@import "../../assets/styles/variables.scss";
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    overflow: hidden;
+    background-color: $white;
+    min-height: 80px;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 12px 40px 0 rgba(4, 8, 118, 0.3);
+    z-index: 13;
+    .overlap-sidebar-index{
+        position: relative;
+        z-index: 14;
+    }
+    .menu-icon{
+        font-size: 1.75em;
+        padding-right: 30px;
+        cursor: pointer;
+        transition: 0.25s ease;
+        color: $black-faint2;
+        &:active{
+            transform: scale(1.1);
+        }
+    }
+    .logo{
+        width: 150px;
+        img{
+            width: 100%;
+        }
+    }
+    .search-sect{
+        width: 400px;
+        background-color: #ececec;
+        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+        padding: 5px 10px;
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: auto 20px;
+        input{
+            background-color: #ececec;
+            border: none;
+            width: 100%;
+            &::placeholder{
+                opacity: 0.6;
+            }
+            &:focus{
+                outline: none;
+            }
+        }
+        @include mediaM(1050px) {
+            width: 250px;
+        }
+        @include mediaM(850px) {
+            display: none;
+        }
+    }
+    .account-buttons{
+        .icon-holder{
+            margin-right: 12px;
+            display: inline-block;
+            padding-top: 3px;
+        }
+        button{
+            font-weight: 700;
+            font-size: 0.8em;
+            transition: 0.3s ease;
+            &:focus{
+                outline: none;
+            }
+        }
+        .login{
+            border: none;
+            background-color: $white;
+        }
+        .signup{
+            border: none;
+            margin-left: 15px;
+            background-color: $primary-blue;
+            color: $white;
+            padding: 6px 12px;
+            border-radius: 5px;
+        }
+        .language{
+            border: none;
+            margin-left: 15px;
+            background-color: $white;
+        }
+        .currency{
+            border: 1px solid $yellow;
+            margin-left: 15px;
+            padding: 6px 12px;
+            border-radius: 5px;
+            color: $orange;
+            background-color: $white;
+            box-shadow: 0 0 10px 0px $yellow-faint;
+        }
+    }
+    @include mediaM(850px) {
+        padding: 10px 20px;
+        .menu-icon{
+            font-size: 1.5em;
+            padding-right: 20px;
+        }
+    }
+    @include mediaM(550px) {
+        min-height: 60px;
+        .logo{
+            width: 100px;
+        }
+    }
+}
+
+.header-spacer{
+    width: 100vw;
+    overflow: hidden;
+    min-height: 80px;
+    @include mediaM(550px) {
+        min-height: 60px;
+    }
+}

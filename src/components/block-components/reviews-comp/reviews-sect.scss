@@ -1,0 +1,35 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.reviews-comp{
+    width: 100%;
+    span{
+        font-size: 1em;
+    }
+    padding-top: 1em;
+    .holder{
+        width: 100%;
+        background-color: $white;
+        border-radius: 1.5em;
+        padding: 1.5em 1em;
+        min-height: calc(100vh - 170px);
+        @include mediaM(850px){
+            min-height: calc(100vh - 80px);
+            padding: 1em 0.7em;
+        }
+        @include mediaM(550px){
+            min-height: calc(100vh - 60px);
+        }
+        hr{
+            width: 100%;
+            color: #112211;
+        }
+        .review{
+            display: grid;
+            grid-template-columns: 40px auto 22px;
+            .content{
+                padding: 0 0.5rem;
+            }
+        }
+    }
+}

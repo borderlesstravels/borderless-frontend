@@ -1,0 +1,18 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.flight-info-case{
+    // background-color: #FEFCFB;
+    width: 100%;
+    padding: 0;
+    position: relative;
+    .flight-card{
+        width: 100%;
+        max-width: 120px;
+        margin: auto;
+        img{
+            width: 100%;
+            border-radius: 10px;
+        }
+    }
+}

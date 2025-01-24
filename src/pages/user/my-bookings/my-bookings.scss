@@ -1,0 +1,92 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.my-bookings{
+    background-color: $white;
+    width: 100%;
+    min-height: calc(100vh - 170px);
+    @include mediaM(850px){
+        min-height: calc(100vh - 80px);
+    }
+    @include mediaM(550px){
+        min-height: calc(100vh - 60px);
+    }
+    span{
+        font-size: 1em;
+    }
+    .booking-banner{
+        background-color: #FAE8FF;
+        padding: 6vh 0 2vh;
+        position: relative;
+        .banner-bg-flag{
+            position: absolute;
+            width: 100%;
+            height: 35%;
+            background-color: $white;
+            left: 0;
+            bottom: 0;
+        }
+        .user-info-card{
+            background-color: $white;
+            padding: 1em;
+            width: 90%;
+            max-width: 1100px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px 2px $black-faint4;
+            margin: auto;
+            position: relative;
+            .user-spread{
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding-bottom: 1em;
+                .image{
+                    width: 130px;
+                    height: 130px;
+                    border-radius: 50%;
+                    background-color: $black-faint5;
+                    margin-right: 2em;
+                    img{
+                        width: 100%;
+                    }
+                }
+                @include mediaM(750px){
+                    display: block;
+                    text-align: center;
+                    .image{
+                        width: 90px;
+                        height: 90px;
+                        margin-right: 0;
+                        margin: auto;
+                        margin-bottom: 1em;
+                    }
+                }
+            }
+            .category-tabs{
+                display: grid;
+                grid-template-columns: 32% 2% 32% 2% 32%;
+                box-shadow: 0 2px 5px -2px $black-faint4;
+                border-radius: 3px;
+                padding: 0 4px;
+                // margin-bottom: 1.5em;
+                .splitter{
+                    width: 1px;
+                    height: 30px;
+                    background-color: #E8D7EE;
+                }
+                .category-tab{
+                    padding: 10px;
+                    text-align: center;
+                    cursor: pointer;
+                    p{
+                        font-size: 0.75em;
+                        opacity: 0.6;
+                    }
+                }
+                .active{
+                    border-bottom: 5px solid $purple-bg;
+                }
+            }
+        }
+    }
+}

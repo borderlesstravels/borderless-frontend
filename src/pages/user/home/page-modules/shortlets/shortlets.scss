@@ -1,0 +1,79 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.shortlets{
+    background-color: #FBF7FC;
+    width: 100%;
+    padding: 3em 0 3em;
+    position: relative;
+    .side-margin{
+        padding: 0 0 0 15%;
+        @include mediaM(767px){
+            padding: 0;
+        }
+    }
+    .deal-case{
+        // width: 100%;
+        // max-width: 250px;
+        margin: 0.3em;
+        .deal-card{
+            width: 90%;
+            max-width: 280px;
+            margin: auto;
+            background-color: $white;
+            // border: 1px solid $black-faint4;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.171);
+            border-radius: 10px;
+            overflow: hidden;
+    
+            .img-sect{
+                position: relative;
+            }
+            .text-sect{
+                padding: 0.9em 0.8em;
+                h6{
+                    margin-bottom: 0;
+                    font-size: 1.1rem;
+                    @include mediaW(1200px){
+                        font-size: 1.25em;
+                    }
+                }
+                p{
+                    margin-bottom: 0;
+                    color: $black-faint1;
+                    font-size: 0.8em;
+                    .icon{
+                        font-size: 0.85em;
+                    }
+                }
+                .canceled{
+                    text-decoration: line-through;
+                    margin-right: 0.6em;
+                }
+                .highlighted{
+                    color: $orange;
+                    font-weight: 600;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    .swiper-pagination-bullet {
+        background-color: #bdbdbd !important;
+        opacity: 1;
+        width: 10px;
+        height: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        font-size: 0.01em;
+        transition: 0.3s ease;
+    
+        // style for active pagination btn
+        &.swiper-pagination-bullet-active {
+            background-color: #ED6300 !important;
+            width: 10px !important;
+        }
+    }
+}

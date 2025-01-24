@@ -1,0 +1,136 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.stay-tickets{
+    background-color: $white;
+    width: 100%;
+    padding: 1vh 0 9vh;
+    .preview-sect{
+        background-color: #FBFAFC;
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+        padding: calc(4vw);
+        border-radius: 1em;
+        .spread-col{
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-direction: column;
+            .text{
+                width: 100%;
+                .orange-box{
+                    width: 50px;
+                    height: 50px;
+                    background-color: $orange;
+                    border-radius: 7px;
+                    margin-right: 1em;
+                }
+                h5{
+                    font-size: 1.5em;
+                }
+            }
+            .action{
+                width: 90%;
+                display: grid;
+                grid-template-columns: 47% 6% 47%;
+                
+                @include mediaM(750px){
+                    width: 100%
+                }
+            }
+        }
+        .booking-button, .reject-button, .review-button{
+            @include base-hollow-button($purple-bg, $purple-bg-hover);
+            font-size: 0.9em;
+            font-weight: 600;
+            padding: 8px 21px;
+            width: 100%;
+            border-radius: 4.5px;
+            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            .icon{
+                font-size: 0.9em;
+            }
+        }
+        .reject-button{
+            @include base-hollow-button($red, $red-hover);
+        }
+        .review-button{
+            padding: 6px 13px;
+            width: auto;
+            font-size: 0.8em;
+            margin-left: 1.5em
+        }
+        .home-button{
+            @include base-button($primary-blue, $primary-blue-hover);
+            font-size: 0.9em;
+            font-weight: 600;
+            padding: 8px 21px;
+            width: 100%;
+            border-radius: 4.5px;
+            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            .icon{
+                font-size: 0.9em;
+            }
+        }
+        .auto-scroll{
+            // background-color: $purple-bg;
+            height: calc(12vw + 30vh);
+            border-radius: 1.5em;
+            overflow: auto;
+            
+        }
+        .single-image-holder{
+            border-radius: 1.5em;
+            overflow: hidden;
+            img{
+                width: 100%;
+            }
+        }
+        .bordered-top-bottom{
+            width: 100%;
+            border-top: 1px solid $black-faint3;
+            border-bottom: 1px solid $black-faint3;
+        }
+    }
+}
+.review-space{
+    .review-star{
+        font-size: 2em;
+        margin: 0 0.2em;
+        color: $grey-lightest;
+    }
+    .review-star.active{
+        color: $yellow-bright;
+    }
+    .accept-button, .reject-button{
+        @include base-hollow-button($purple-bg, $purple-bg-hover);
+        font-size: 0.9em;
+        font-weight: 600;
+        padding: 8px 21px;
+        width: 100%;
+        border-radius: 4.5px;
+        box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+        .icon{
+            font-size: 0.9em;
+        }
+    }
+    .reject-button{
+        @include base-hollow-button($red, $red-hover);
+    }
+    textarea{
+        width: 100%;
+        padding: 3px 10px;
+        border-radius: 4px;
+        transition: 0.2s ease;
+        border: 1px solid #E6E8EC;
+        &:hover{
+          box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+        }
+        &:focus{
+          outline: none;
+          box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.3);
+          border-color: $purple-bg;
+        }
+    }
+}

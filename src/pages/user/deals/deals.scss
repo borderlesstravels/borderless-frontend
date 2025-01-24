@@ -1,0 +1,64 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.deals{
+    background-color: $white;
+    width: 100%;
+    span{
+        font-size: 1em;
+    }
+    .deals-hero{
+        width: 100%;
+        padding: 6vh 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $white;
+        box-shadow: 0 2px 7px 1px $black-faint3;
+        position: relative;
+        z-index: 5;
+        .hero-grid{
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            .img-holder{
+                .imh{
+                    width: 80%;
+                    margin: auto;
+                }
+            }
+            .text-holder{
+                padding: 1em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .text-box{
+                    width: 100%;
+                    padding: 2em 0;
+                    h1{
+                        font-size: calc(1.755rem + 1.5vw);
+                        span{
+                            font-weight: 700;
+                        }
+                    }
+                    h6{
+                        font-size: 1.2em;
+                        font-weight: 700;
+                    }
+                }
+            }
+            @include mediaM(750px){
+                display: block;
+                .img-holder{
+                    .imh{
+                        width: 80%;
+                        margin: auto;
+                        max-width: 400px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,104 @@
+// Color variables
+
+$primary-blue: #040876;
+$primary-blue-hover: #01033d;
+$primary-blue-active: #000320;
+
+$secondary-blue: #0079BF;
+$secondary-blue-hover: #004faa;
+
+$faint-blue-bg: #F5F3FF;
+$faint-blue-border: rgba(104, 48, 195, 0.3);
+$purple-bg: #660476;
+$purple-bg-hover: #450050;
+
+$primary-bg: #F6F9FF;
+$primary-bg-hover: #cad9f5;
+
+$yellow-bright: #FFB60A;
+$yellow: #DD9A00;
+$yellow-dark: #9c6d00;
+$yellow-faint: rgba(221, 155, 0, 0.4);
+$orange: #ED6300;
+$orange-hover: #c05000;
+$orange-active: #8d3b00;
+$red: #ff0101;
+$red-hover: #a10000;
+$red-active: #530000;
+
+$white: #ffffff;
+$white-faint1: rgba(255, 255, 255, 0.7);
+$white-faint2: rgba(255, 255, 255, 0.45);
+$white-faint3: rgba(255, 255, 255, 0.2);
+$white-faint4: rgba(255, 255, 255, 0.1);
+$white-faint5: rgba(255, 255, 255, 0.05);
+
+$black: #000000;
+$black-faint1: rgba(0, 0, 0, 0.7);
+$black-faint2: rgba(0, 0, 0, 0.45);
+$black-faint3: rgba(0, 0, 0, 0.2);
+$black-faint4: rgba(0, 0, 0, 0.1);
+$black-faint5: rgba(0, 0, 0, 0.05);
+$black-faint6: rgba(0, 0, 0, 0.03);
+
+$grey-lightest: #eff0f2;
+$grey-light: #cccccc;
+$grey-mid: #818181;
+$grey-dark: #4f5873;
+$off-black: #4E4E4E;
+
+$faint-font: rgba(34, 33, 91, 0.6);
+
+$transparent: rgba(0, 0, 0, 0);
+
+// Mixins
+
+@mixin mediaM($value) {
+  @media all and (max-width: $value) {
+    @content;
+  }
+}
+@mixin mediaW($value) {
+  @media all and (min-width: $value) {
+    @content;
+  }
+} ;
+
+
+
+@mixin base-button ($bg, $hover-bg, $bg-shadow: rgba(0, 0, 0, 0), $hover-bg-shadow: rgba(0, 0, 0, 0)) {
+  background-color: $bg;
+  color: $white;
+  border: none;
+  transition: 0.3s ease;
+  border-radius: 6px;
+  padding: 6px 9px;
+  box-shadow: 0 1px 10px 0 $bg-shadow;
+  &:hover{
+      background-color: $hover-bg;
+      box-shadow: 0 1px 12px 0 $bg-shadow;
+  }
+  &:active{
+      transform: scale(1.03) translateY(5px);
+  }
+}
+
+@mixin base-hollow-button ($bg, $hover-bg, $bg-shadow: rgba(0, 0, 0, 0), $hover-bg-shadow: rgba(0, 0, 0, 0)) {
+  background-color: $white-faint5;
+  color: $bg;
+  border: 1px solid $bg;
+  transition: 0.3s ease;
+  border-radius: 6px;
+  padding: 6px 9px;
+  &:hover{
+    color: $white;
+    background-color: $hover-bg;
+    box-shadow: 0 1px 10px 0 $bg-shadow;
+  }
+  &:active{
+    background-color: $hover-bg;
+    border-color: $hover-bg;
+    box-shadow: 0 1px 12px 0 $bg-shadow;
+    transform: scale(1.03) translateY(5px);
+  }
+}

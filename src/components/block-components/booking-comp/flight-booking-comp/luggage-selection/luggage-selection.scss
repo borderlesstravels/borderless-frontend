@@ -1,0 +1,29 @@
+@import '../../../../../assets/styles/variables.scss';
+
+.luggage-case{
+    @include mediaW(751px){
+        min-width: 300px;
+    }
+    .luggage-sect{
+        display: grid;
+        grid-template-columns: 40px auto 80px;
+        padding: 5px 3px;
+        .icon-holder{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-case{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            .case-icon{
+                color: $primary-blue;
+                font-size: 1.2em;
+            }
+        }
+        .clicker-container{
+            width: 100px;
+        }
+    }
+}

@@ -1,0 +1,240 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.sky-rewards{
+    background-color: $white;
+    width: 100%;
+    span{
+        font-size: 1em;
+    }
+    .banner{
+        width: 100%;
+        min-height: calc(100vh - 170px);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url(../../../assets/images/sky-rewards-hero-background.jpg);
+        background-size: cover;
+        background-position: center;
+        @include mediaM(850px){
+            min-height: calc(100vh - 80px);
+        }
+        @include mediaM(550px){
+            min-height: calc(100vh - 60px);
+            background-image: url(../../../assets/images/sky-rewards-hero-background-mobile.jpg);
+        }
+        .text-sect{
+            position: relative;
+            width: 90%;
+            padding: 2vh 0;
+            max-width: 700px;
+            p{
+                line-height: 1.8;
+                color: #373737;
+            }
+            .plane-img-holder{
+                position: absolute;
+                top: -10vh;
+                left: 10%;
+                width: 80%;
+                img{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .works-sect{
+        width: 96%;
+        max-width: 1100px;
+        margin: auto;
+        padding: 5em 0;
+        .works-card{
+            width: 100%;
+            position: relative;
+            padding: 0 0 1em;
+            margin: auto;
+            max-width: 370px;
+            .bg-card{
+                position: absolute;
+                bottom: 2em;
+                left: -0.5em;
+                background-color: #DF6951;
+                border-radius: 25px;
+                width: 120px;
+                height: 120px;
+                transform: scale(0);
+                transition: 0.3s ease;
+            }
+            .main-card{
+                width: 90%;
+                max-width: 320px;
+                transition: 0.3s ease;
+                border-radius: 30px;
+                padding: 1em 0.8em;
+                margin: 1.5em auto;
+                text-align: center;
+                position: relative;
+                box-shadow: 0 10px 20px 0 rgba(56, 0, 146, 0.07);
+                background-color: $white;
+                .imh{
+                    width: 70%;
+                    max-width: 100px;
+                    margin: 0.5em auto;
+                }
+                h5{
+                    font-weight: 700;
+                    padding-top: 0.5em;
+                }
+                p{
+                    color: $black-faint2;
+                    font-size: 0.9em;
+                    font-weight: 500;
+                }
+                &:hover{
+                    box-shadow: 0 10px 20px 0 rgba(56, 0, 146, 0.25);
+                    transform: translateY(-1em);
+                }
+            }
+            &:hover{
+                .bg-card{
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+    .explore-grid{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        .explore-cities, .explore-nature{
+            background-image: url(../../../assets/images/sky-rewards-explore-cities.jpg);
+            width: 100%;
+            padding: 4em 0 3em;
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            color: $white;
+            h1, h2, h3, h4, h5, h6, p, button {
+                color: $white;
+            }
+            h1{
+                font-family: serif;
+                padding-bottom: 0.6em;
+            }
+            h6{
+                font-size: 1.1em;
+                font-weight: 700;
+            }
+            button {
+                color: $white;
+                border-radius: 8px;
+                border: 1px solid $white;
+                padding: 6px 15px;
+                transition: 0.3s ease;
+                background-color: rgba(0, 0, 0, 0.3);
+                font-size: 0.9em;
+                font-weight: 500;
+                &:hover{
+                    background-color: $white;
+                    color: $black;
+                }
+            }
+        }
+        .explore-nature{
+            background-image: url(../../../assets/images/sky-rewards-explore-nature.jpg);
+        }
+        @include mediaM(950px){
+            display: block;
+        }
+    }
+    .faq-sect{
+        padding: 2em 0 5em;
+        .faq-card{
+            width: 92%;
+            max-width: 1200px;
+            margin: auto;
+            background-image: linear-gradient(to right, #193048, #603F84, #BE56D8);
+            position: relative;
+            padding: 4em 1em 0;
+            .faq-questions{
+                padding: 1em;
+                .question{
+                    .icon, h6{
+                        color: $white;
+                        font-size: 1.15em;
+                        transition: 0.3s ease;
+                    }
+                    .rotated{
+                        transform: rotate(135deg);
+                    }
+                    p{
+                        color: $white;
+                    }
+                    padding-bottom: 0.8em
+                }
+                .answer{
+                    transition: 0.3s ease;
+                    max-height: none;
+                    padding: 0.5em;
+                }
+                .flat-answer{
+                    transition: 0.3s ease;
+                    max-height: 0;
+                    overflow: hidden;
+                }
+            }
+            .subscription-card{
+                position: relative;
+                width: 92%;
+                max-width: 1100px;
+                margin: auto;
+                transform: translateY(3em);
+                background-color: #FDF4FF;
+                border-radius: 15px;
+                box-shadow: 0 5px 15px 2px $black-faint4;
+                padding: 1.4em;
+                .subscribe-grid{
+                    width: 100%;
+                    max-width: 450px;
+                    background-color: $white;
+                    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+                    padding: 14px;
+                    border-radius: 30px;
+                    display: grid;
+                    grid-template-columns: auto 110px;
+                    input{
+                        // background-color: ;
+                        border: none;
+                        width: 100%;
+                        padding: 2px 12px;
+                        &::placeholder{
+                            opacity: 0.6;
+                        }
+                        &:focus{
+                            outline: none;
+                        }
+                    }
+                    button{
+                        background-image: linear-gradient(to right, #1B0C1F, #C957DB);
+                        color: $white;
+                        border: none;
+                        transition: 0.3s ease;
+                        border-radius: 30px;
+                        padding: 12px 9px;
+                        font-size: 0.8em;
+                        font-weight: 700;
+                        &:hover{
+                            background-image: linear-gradient(#130716, #a640b6);
+                        }
+                        &:active{
+                            transform: scale(1.04);
+                        }
+                    }
+                    @include mediaM(450px){
+                        grid-template-columns: auto 90px;
+                    }
+                }
+            }
+        }
+    }
+}

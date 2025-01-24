@@ -1,0 +1,68 @@
+@import '../../../../../assets/styles/variables.scss';
+
+.date-case{
+    width: 100%;
+    // @include mediaW(750px){
+    //     width: 500px;
+    // }
+    // @include mediaW(1000px){
+    //     width: 750px;
+    // }
+    .date-selection{
+        width: 100%;
+    }
+    .confirm-date-button{
+        @include base-button($purple-bg, $purple-bg-hover);
+    }
+    .range-holder{
+        @include mediaM(750px){
+            display: flex;
+            align-items: center;
+        }
+    }
+    .rdrMonth{
+        width: 23em;
+        padding-bottom: 0.5em;
+        @include mediaW(1000px){
+            width: 20em;
+        }
+    }
+    .rdrMonthName{
+        padding: 0.2em;
+    }
+    .rdrMonthAndYearWrapper {
+        height: 40px;
+        padding-top: 0px;
+    }
+    .rdrMonthAndYearPickers select{
+        padding: 0px 30px 0px 10px;
+    }
+    .rdrDay{
+        @include mediaW(751px){
+            height: 2em;
+        }
+    }
+    .rdrDateRangePickerWrapper{
+        @include mediaM(750px){
+            margin: auto;
+        }
+    }
+    .reset-button{
+        border: none;
+        transition: 0.3s ease;
+        font-size: 0.9em;
+        background-color: $primary-bg;
+        color: $primary-blue;
+        border-radius: 15px;
+        padding: 1px 12px;
+        &:hover{
+            background-color: $primary-bg-hover;
+        }
+        &:active{
+            transform: scale(1.1);
+        }
+        &:focus{
+            outline: none;
+        }
+    }
+}

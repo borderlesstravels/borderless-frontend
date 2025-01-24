@@ -1,0 +1,151 @@
+@import "../../../../../assets/styles/variables.scss";
+
+
+.profile-overview{
+    // background-color: $white;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 32% 32% 3% 33%;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 3em 0;
+    .user-view{
+        grid-area: 1 / 4 / 1 / 4;
+        border: 1px solid #cecece;
+        border-radius: 12px;
+        padding: 0.8em 0.6em;
+        .im-holder{
+            padding: 1em;
+            .imh{
+                width: 70%;
+                max-width: 200px;
+                margin: auto;
+                padding: 0.4em 0 0.6em;
+            }
+            h6{
+                text-align: center;
+                color: $purple-bg;
+                font-size: 1.1em;
+            }
+        }
+        .splitter{
+            width: 100%;
+            height: 1px;
+            background-color: #cecece;
+            margin-bottom: 2em;
+        }
+        .text-holder{
+            padding: 1em;
+            .icon-holder{
+                width: 40px;
+                height: 40px;
+                background-color: $white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 0 5px 0 $black-faint4;
+                border-radius: 50%;
+                .icon{
+                    color: $black-faint3;
+                }
+            }
+            .txt-holder{
+                padding-left: 0.4em;
+                h6{
+                    color: #6B7A99;
+                    font-weight: 700;
+                    font-size: 1.1em;
+                }
+            }
+        }
+        margin-bottom: 2em;
+    }
+    .separator{
+        grid-area: 1 / 3 / 1 / 3;}
+    .transactions{
+        grid-area: 1 / 1 / 1 / 3;
+        .content-card, .content-card2{
+            padding: 15px;
+            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            border-radius: 10px;
+            background-color: $white;
+            .mini-card-height{
+                height: 150px;
+                overflow: auto;
+                .underline-btm{
+                    border-bottom: 1px solid #ebebeb;
+                    .date-card{
+                        padding: 0px 6px 6px;
+                        border-radius: 6px;
+                        background-color: #f0f0f0;
+                        text-align: center;
+                        span{
+                            font-size: 0.7em;
+                            color: $black-faint1;
+                            line-height: 0.51;
+                        }
+                        h5{
+                            font-size: 1.5;
+                            line-height: 1;
+                            color: $black;
+                        }
+                    }
+                    .amount-box{
+                        border: 1px solid #e3a8f7;
+                        padding: 4px 8px;
+                        border-radius: 5px;
+                        background: 1px solid #eeeeee;
+                        text-align: center;
+                        min-width: 70px;
+                    }
+                }
+            }
+        }
+        .content-card2{
+            .search-table{
+                display: grid;
+                grid-template-columns: auto 50px;
+                .input-holder{
+                    padding-right: 6px;
+                    input{
+                        width: 100%;
+                        padding: 5px 15px;
+                        border-radius: 25px;
+                        transition: 0.3s ease;
+                        border: 1px solid #e2e2e2;
+                        &:hover{
+                            box-shadow: 0 1px 8px 0 $black-faint3;
+                        }
+                        &:focus{
+                            outline: none;
+                            border-color: #BC46E5;
+                        }
+                    }
+                }
+                .trigger-search{
+                    margin-top: 4px;
+                    color: $white;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #BC46E5;
+                    .icon{
+                        font-size: 0.8em;
+                    }
+                    transition: 0.3s ease;
+                    &:hover{
+                        background-color: $purple-bg;
+                    }
+                }
+            }
+        }
+    }
+    @include mediaM(991px) {
+        display: block;
+    }
+    // grid-template-areas: 'transactions' 'transactions', 'personal';
+}

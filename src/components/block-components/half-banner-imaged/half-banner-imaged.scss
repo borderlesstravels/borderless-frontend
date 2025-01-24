@@ -1,0 +1,48 @@
+@import '../../../assets/styles/variables.scss';
+
+.half-banner-imaged{
+    width: 100%;
+    @include mediaW(1001px){
+        padding-bottom: 5em;
+    }
+    .top-band{
+        padding-top: 2em;
+        width: 100%;
+        background-image: url(../../../assets/images/yellow-brick-bg.jpg);
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        .topic{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 15vh;
+            @include mediaW(1001px){
+                min-height: 25vh;
+            }
+            h2{
+                color: $primary-blue-hover;
+            }
+        }
+        .left-holder{
+            @include mediaW(1001px){
+                width: 70%;
+            }
+        }
+        .floating-img{
+            position: absolute;
+            bottom: 0;
+            right: 8%;
+            width: 24%;
+            transform: translateY(40%);
+            z-index: 10;
+            img{
+                width: 100%;
+            }
+            @include mediaM(1000px){
+                display: none;
+            }
+        }
+    }
+}

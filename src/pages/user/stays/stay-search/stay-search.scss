@@ -1,0 +1,128 @@
+@import "../../../../assets/styles/variables.scss";
+
+
+.stay-search{
+    background-color: $white;
+    width: 100%;
+    position: relative;
+    span{
+        font-size: 1em;
+    }
+    .stay-case{
+        padding: 15vh 0 0.5vh;
+        // background-color: chartreuse;
+        background-color: $white;
+        // position: relative;
+        .stay-listout{
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 4vh 0 4vh;
+            background-color: #fff;
+            position: relative;
+            .stay-list-restrictor{
+                overflow: auto;
+                margin: 0 -0.5em;
+                max-height: calc(100vh - 250px);
+                padding: 0.5em;
+                // padding-right: 1em;
+                @include mediaM(850px){
+                    max-height: calc(100vh - 120px);
+                }
+                @include mediaM(550px){
+                    max-height: calc(100vh - 120px);
+                }
+            }
+            .pad-web{
+                @include mediaW(992px){
+                    padding-left: 0.7em;
+                }
+            }
+            .stay-card, .stay-card2{
+                box-shadow: 0 2px 7px 1px $black-faint4;
+                padding: 0;
+                border-radius: 12px;
+                display: grid;
+                grid-template-columns: 35% 65%;
+                min-height: 140px;
+                margin-bottom: 2em;
+                .logo-side{
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    flex-direction: column;
+                    padding: 0px;
+                    img{
+                        width: 100%;
+                        border-radius: 12px 0 0 12px;
+                    }
+                }
+                .content-side{
+                    padding: 15px 12px;
+                    .save-stay{
+                        // height: 50px;
+                        width: 40px;
+                        border-radius: 4px;
+                        border: 1px solid $purple-bg;
+                        transition: 0.3s ease;
+                        .save-icon{
+                            color: $purple-bg
+                        }
+                        &:hover{
+                            background-color: $purple-bg;
+                            color: $white;
+                            .save-icon{
+                                color: $white;
+                            }
+                        }
+                    }
+                    .stay-button{
+                        @include base-button($purple-bg, $purple-bg-hover);
+                        font-size: 0.8em;
+                        font-weight: 600;
+                        padding: 7px 10px;
+                        width: 100%;
+                        border-radius: 4.5px;
+                        box-shadow: 0 7px 12px 0 rgba(103, 4, 118, 0.25);
+                        .icon{
+                            font-size: 0.9em;
+                        }
+                    }
+                }
+                @include mediaM(600px){
+                    display: block;
+                    .logo-side{
+                        width: 100%;
+                        max-width: 400px;
+                        margin: auto;
+                        img{
+                            border-radius: 12px 12px 0 0;
+                        }
+                    }
+                }
+            }
+            .stay-card2{
+                display: flex;
+            }
+        }
+        .stay-info{
+            padding: 0vh 0 5vh;
+            position: relative;
+        }
+    }
+    .loader-holder{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: calc(100vh - 170px);
+        @include mediaM(850px){
+            height: calc(100vh - 80px);
+        }
+        @include mediaM(550px){
+            height: calc(100vh - 60px);
+        }
+        z-index: 10;
+        background-color: rgba(253, 253, 253, 0.3);
+    }
+}

@@ -1,0 +1,160 @@
+@import "../../../../assets/styles/variables.scss";
+
+
+.profile-sect{
+    // background-color: $white;
+    width: 100%;
+    span{
+        font-size: 1em;
+    }
+    .holder{
+        width: 100%;
+        min-height: calc(100vh - 170px);
+        padding-top: 1em;
+        @include mediaM(850px){
+            min-height: calc(100vh - 80px);
+        }
+        @include mediaM(550px){
+            min-height: calc(100vh - 60px);
+        }
+        .graph-holder{
+            border-radius: 1.5em;
+            overflow: hidden;
+            box-shadow: 0 2px 10px 1px $black-faint4;
+            padding: 5em 0;
+            background-color: #DCD4E3;
+        }
+        .notifications-holder{
+            border-radius: 1em;
+            box-shadow: 0 2px 10px 1px $black-faint4;
+            padding: 0.6em 0.6em;
+            background-color: #eeeeee;
+            border: 1px solid $white;
+            .notification-list{
+                overflow: auto;
+                min-height: 15vh;
+                max-height: 60vh;
+                @include mediaM(550px){
+                    max-height: 80vh;
+                }
+                .notification-card{
+                    border-radius: 5px;
+                    background-color: $white;
+                    padding: 0.7em 0.4em;
+                    margin-bottom: 0.7em;
+                    box-shadow: 0 1px 5px 0 $black-faint3;
+                    position: relative;
+                    .label{
+                        font-size: 0.85em;
+                        font-style: italic;
+                        margin-bottom: 0;
+                        color: $orange;
+                    }
+                    .drawer-holder{
+                        .drawer{
+                            overflow: hidden;
+                            max-height: 0;
+                            transition: 0.4s ease;
+                            p{
+                                font-size: 0.85em;
+                            }
+                        }
+                        .opened{
+                            max-height: 100vh;
+                            transition: 0.4s ease;
+                        }
+                        .draw-control{
+                            width: 100px;
+                            text-align: center;
+                            margin: auto;
+                            border-radius: 5px;
+                            border: 0.5px dashed $purple-bg;
+                            color: $purple-bg;
+                            transition: 0.3s ease;
+                            &:hover{
+                                background-color: #f7eeff;
+                            }
+                        }
+                    }
+                    .action-holder{
+                        max-height: 0;
+                        overflow: hidden;
+                        transition: 0.3s ease;
+                    }
+                    .action{
+                        width: 100%;
+                        display: grid;
+                        grid-template-columns: 32% 2% 32% 2% 32%;
+                        padding: 0.4em 0;
+                        
+                        @include mediaM(1050px){
+                            grid-template-columns: 47% 6% 47%;
+                        }
+                        .reject-button{
+                            @include base-hollow-button($red, $red-hover);
+                            font-size: 0.8em;
+                            font-weight: 600;
+                            padding: 4px 10px;
+                            width: 100%;
+                            border-radius: 4.5px;
+                            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+                            .icon{
+                                font-size: 0.9em;
+                            }
+                        }
+                        .confirm-button{
+                            @include base-button($primary-blue, $primary-blue-hover);
+                            font-size: 0.8em;
+                            font-weight: 600;
+                            padding: 4px 10px;
+                            width: 100%;
+                            border-radius: 4.5px;
+                            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+                            .icon{
+                                font-size: 0.9em;
+                            }
+                        }
+                    }
+                    .view-button{
+                        @include base-button($purple-bg, $purple-bg-hover);
+                        font-size: 0.8em;
+                        font-weight: 600;
+                        padding: 4px 10px;
+                        width: 100%;
+                        border-radius: 4.5px;
+                        box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+                        .icon{
+                            font-size: 0.9em;
+                        }
+                    }
+                    .wb-view{
+                        @include mediaM(1050px){
+                            display: none;
+                        }
+                    }
+                    .mb-view{
+                        @include mediaW(1051px){
+                            display: none;
+                        }
+                    }
+                    &:hover{
+                        .action-holder{
+                            max-height: 200px;
+                            overflow: visible;
+                        }
+                    }
+                    .processing-tag{
+                        position: absolute;
+                        top: 5px;
+                        right: 10px;
+                    }
+                }
+                .frozen{
+                    opacity: 0.7;
+                    filter: grayscale(0.5);
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+}

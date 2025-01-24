@@ -1,0 +1,167 @@
+@import "../../../../assets/styles/variables.scss";
+
+
+.stay-preview{
+    background-color: $white;
+    width: 100%;
+    padding: 5vh 0 9vh;
+    .preview-sect{
+        background-color: #FBFAFC;
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+        padding: calc(4vw);
+        border-radius: 1em;
+        .save-stay{
+            // height: 50px;
+            width: 40px;
+            border-radius: 4px;
+            border: 1px solid $purple-bg;
+            transition: 0.3s ease;
+            .save-icon{
+                color: $purple-bg
+            }
+            &:hover{
+                background-color: $purple-bg;
+                .save-icon{
+                    color: $white
+                }
+            }
+        }
+        .stay-button{
+            @include base-button($purple-bg, $purple-bg-hover);
+            font-size: 0.9em;
+            font-weight: 600;
+            padding: 8px 21px;
+            width: 100%;
+            border-radius: 4.5px;
+            box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+            .icon{
+                font-size: 0.9em;
+            }
+        }
+        .tab-grid{
+            display: grid;
+            grid-template-columns: 25% 25% 25% 25%;
+            margin: 0 -0.7em;
+            .grid-tab{
+                button{
+                    width: 100%;
+                }
+                padding: 0.7em;
+                button{
+                    font-size: 0.9em;
+                    font-weight: 600;
+                    padding: 8px 21px;
+                    width: 100%;
+                    border-radius: 6px;
+                    border: 1px solid $purple-bg;
+                    color: $purple-bg;
+                    background-color: $white;
+                    &:hover{
+                        @include base-button($purple-bg, $purple-bg-hover);
+                        padding: 8px 21px;
+                    }
+                }
+                .active-tab-button{
+                    @include base-button($purple-bg, $purple-bg-hover);
+                    font-size: 0.9em;
+                    font-weight: 600;
+                    padding: 8px 21px;
+                    width: 100%;
+                    border-radius: 6px;
+                    box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+                    pointer-events: none;
+                }
+            }
+            @include mediaW(850px){
+                min-width: 600px;
+            }
+            @include mediaM(750px){
+                grid-template-columns: 50% 50%;
+            }
+        }
+        .back-sect{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s ease;
+            .return{
+                font-size: 0.9em;
+                font-weight: 600;
+                padding: 8px 8px;
+                width: 100%;
+                border-radius: 6px;
+                border: 1px solid $purple-bg;
+                color: $purple-bg;
+                background-color: $white;
+                &:hover{
+                    @include base-button($purple-bg, $purple-bg-hover);
+                    padding: 8px 8px;
+                }
+            }
+            &:hover{
+                .return{
+                    @include base-button($purple-bg, $purple-bg-hover);
+                    padding: 8px 8px;
+                }
+                h6{
+                    color: $purple-bg;
+                }
+            }
+            &:active{
+                transform: scale(1.07);
+            }
+            @include mediaM(920px){
+                display: none;
+            }
+        }
+        .bordered-top-bottom{
+            width: 100%;
+            border-top: 1px solid $black-faint3;
+            border-bottom: 1px solid $black-faint3;
+        }
+    }
+}
+
+.error-box{
+    .cancel{
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: 0.2s ease;
+      border: 1px solid #E8E9EA;
+      font-size: 0.85em;
+      box-shadow: 0 1px 10px 0 $black-faint4;
+      background-color: $white;
+      &:hover{
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+        border-color: #f3a4cb;
+      }
+      &:active{
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.3);
+      }
+    }
+    .confirmation-button{
+        padding: 10px 25px;
+        background-image: linear-gradient(to left, #C957DB, rgba(28, 12, 31, 0.79));
+        border-radius: 8px;
+        transition: 0.2s ease;
+        border: none;
+        color: white;
+        font-weight: 600;
+        font-size: 0.85em;
+        box-shadow: 0 1px 6px 2px $black-faint3;
+        &:hover{
+          filter: brightness(80%);
+          color: white;
+        }
+        &:focus{
+          outline: none;
+        }
+        &:disabled{
+          background-image: linear-gradient(to left, #5d1368, rgba(0, 0, 0, 0.89));
+          color: white;
+        }
+    }
+}

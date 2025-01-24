@@ -1,0 +1,82 @@
+@import "../../../../assets/styles/variables.scss";
+
+
+.add-shortlet{
+    background-color: #F9F5FA;
+    width: 100%;
+    padding: 2em 0 0;
+    min-height: calc(100vh - 170px);
+    span{
+        font-size: 1em;
+    }
+    .category-tabs{
+        display: grid;
+        grid-template-columns: 33.3% 33.4% 33.3%;
+        box-shadow: 0 2px 5px -2px $black-faint4;
+        background-color: $white;
+        border-radius: 3px;
+        padding: 0 4px;
+        width: 90%;
+        max-width: 800px;
+        margin: 1em auto;
+        .category-tab{
+            padding: 10px;
+            text-align: center;
+            // cursor: pointer;
+            p{
+                font-size: 0.75em;
+                opacity: 0.6;
+            }
+            h6{
+                padding-left: 0.5em;
+            }
+        }
+        .active{
+            border-bottom: 2px solid $orange;
+        }
+    }
+    .recede-button{
+        padding: 0.6em;
+        background-color: $white;
+        border: 1px solid $black-faint3;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.15);
+        color: $black-faint2;
+        transition: 0.3s ease;
+        &:hover{
+            border-color: $black;
+            color: $black;
+            background-color: #f7f5f5;
+        }
+        &:active{
+            transform: translateY(3px);
+        }
+    }
+    .proceed-button{
+        padding: 0.6em;
+        color: $white;
+        border: 1px solid $orange;
+        box-shadow: 0 10px 20px 0 rgba(237, 99, 0, 0.35);
+        background-color: $orange;
+        transition: 0.3s ease;
+        &:hover{
+            border-color: $orange-hover;
+            background-color: $orange-hover;
+        }
+        &:active{
+            transform: translateY(3px);
+        }
+    }
+    .proceed-button, .recede-button{
+        font-weight: 600;
+        font-size: 0.85em;
+        @include mediaM(750px){
+            font-size: 0.95em;
+        }
+    }
+    @include mediaM(850px){
+        min-height: calc(100vh - 80px);
+    }
+    @include mediaM(550px){
+        min-height: calc(100vh - 60px);
+    }
+}

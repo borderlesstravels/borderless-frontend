@@ -1,0 +1,66 @@
+@import "../../../../assets/styles/variables.scss";
+
+
+.contact-hero{
+    background-color: $white;
+    width: 100%;
+    padding: 8vh 0 5vh;
+    color: $primary-blue;
+    position: relative;
+    .hero-spread{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        // background-color: chartreuse;
+        .text-sect{
+            width: 90%;
+            max-width: 500px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            h1{
+                span{
+                    font-size: 1em;
+                }
+                @include mediaW(1101px){
+                    font-size: 3.0rem;
+                }
+            }
+            p{
+                @include mediaW(1101px){
+                    font-size: 1.4rem;
+                }
+            }
+        }
+        .img-sect{
+            width: 90%;
+            max-width: 520px;
+            img{
+                width: 100%;
+            }
+        }
+        @include mediaM(650px){
+            display: block;
+            .text-sect{
+                width: 100%;
+                max-width: auto;
+                padding-bottom: 1em;
+                h1{
+                    font-size: 2.4rem;
+                }
+                h2{
+                    font-size: 1.8rem;
+                }
+                .button-sect{
+                    width: 80%;
+                    max-width: 250px;
+                }
+            }
+            .img-sect{
+                width: 100%;
+                max-width: auto;
+            }
+        }
+    }
+}

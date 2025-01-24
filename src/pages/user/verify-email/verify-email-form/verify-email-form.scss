@@ -1,0 +1,105 @@
+@import "/src/assets/styles/variables.scss";
+
+.dialogue-container {
+  // background-color: $white;
+  padding: 15px;
+  // max-width: 450px;
+  // margin: auto;
+
+  h6 {
+    font-size: 1.7em;
+    font-weight: 700;
+    color: $black;
+    text-align: center;
+  }
+  p{
+    font-size: 0.7em;
+    opacity: 0.7;
+    text-align: left;
+  }
+  .brief{
+
+    text-align: center;
+  }
+
+  .create-account {
+    cursor: pointer;
+  }
+
+  .reg-card {
+    label {
+      font-size: 0.75em;
+      font-weight: 500;
+      margin-bottom: 0;
+      margin-top: 1em;
+      width: 100%;
+      text-align: left;
+    }
+    input, select{
+      width: 100%;
+      padding: 8px 15px;
+      border-radius: 40px;
+      transition: 0.2s ease;
+      border: 1px solid #E8E9EA;
+      font-size: 0.9em;
+      &:hover{
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+      }
+      &:focus{
+        outline: none;
+        box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.3);
+        border-color: #C957DB;
+      }
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        box-shadow: 0 0 0px 1000px $white inset;
+        transition: background-color 5000s ease-in-out 0s;
+        background-color: $white;
+        border: 1px dashed #dabedf;
+      }
+    }
+    select {
+      padding: 8px 15px;
+    }
+    .password-shower {
+      float: right;
+      margin-top: -33px;
+      margin-right: 10px;
+      position: relative;
+      i {
+        cursor: pointer;
+      }
+      @include mediaM(750px) {
+        margin-top: -28px;
+      }
+    }
+  }
+}
+.error-popup{
+    animation: expand 1s ease-in-out 1;
+    color: $red;
+}
+
+.btn-con {
+  // width: 100%;
+  padding: 9px 25px;
+  background-image: linear-gradient(to left, #C957DB, rgba(28, 12, 31, 0.79));
+  border-radius: 20px;
+  transition: 0.2s ease;
+  border: none;
+  color: white;
+  font-weight: 600;
+  &:hover{
+    filter: brightness(80%);
+    color: white;
+  }
+  &:focus{
+    outline: none;
+  }
+  &:disabled{
+    background-image: linear-gradient(to left, #5d1368, rgba(0, 0, 0, 0.89));
+    color: white;
+  }
+}
+

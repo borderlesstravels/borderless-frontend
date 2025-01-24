@@ -1,0 +1,33 @@
+@import '../../../../../assets/styles/variables.scss';
+
+.location-holder{
+    .location-selection{
+        position: relative;
+        .label{
+            position: absolute;
+            padding: 0 0.3em;
+            background: $white;
+            left: 5%;
+            top: -0.8em;
+            font-size: 0.7em;
+            z-index: 2;
+        }
+        .type-box{
+            input{
+                padding: 0.6em 0.9em;
+                cursor: pointer;
+                transition: 0.3s ease;
+            }
+        }
+    }
+    // .selected-label{
+    //     .label{
+    //         background-image: linear-gradient($white, $white, $white, $faint-blue-border, $faint-blue-border, $faint-blue-border);
+    //     }
+    //     // &:hover{
+    //     //     .label{
+    //     //         background-image: none;
+    //     //     }
+    //     // }
+    // }
+}

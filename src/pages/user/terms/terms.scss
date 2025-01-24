@@ -1,0 +1,56 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.terms{
+    background-color: $white;
+    width: 100%;
+    span{
+        font-size: 1em;
+    }
+    .banner{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        @include mediaM(550px) {
+            grid-template-columns: 55% 45%;
+        }
+        .text-side{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5vh 0;
+            min-height: calc(19vh + 10vw);
+            background-color: $purple-bg;
+            .text-holder{
+                width: 80%;
+                margin:  0 auto;
+                max-width: 400px;
+            }
+            p{
+                color: $white;
+                margin-bottom: 0;
+                span{
+                    background-color: $yellow;
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    margin-right: 20px;
+                    @include mediaM(650px) {
+                        margin-right: 8px;
+                    }
+                }
+            }
+            h1{
+                color: $white;
+                font-weight: 900;
+                @include mediaW(550px) {
+                    font-size: calc(1.5rem + 2.5vw)
+                }
+            }
+        }
+        .empty-side{
+            background-image: url(../../../assets/images/terms-banner-bg.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+    }
+}

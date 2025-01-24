@@ -1,0 +1,47 @@
+@import "../../../assets/styles/variables.scss";
+
+
+.rewards{
+    background-color: $white;
+    width: 100%;
+    .reward-card{
+        width: 96%;
+        margin: 1em auto;
+        border: 1px solid #8B94B2;
+        border-radius: 10px;
+        padding: 14px 10px;
+        .reward-button{
+            @include base-button($orange, $orange);
+            font-size: 0.8em;
+            font-weight: 600;
+            padding: 14px 10px;
+            margin: 0.8em 0 0.9em;
+            width: 100%;
+            border-radius: 4.5px;
+            box-shadow: 0 4px 12px 2px rgba(146, 80, 17, 0.35);
+            font-weight: 700;
+            &:hover{
+                box-shadow: 0 4px 12px 2px rgba(77, 46, 17, 0.35);
+            }
+        }
+        .flash-deal{
+            width: 100%;
+            padding: 5px;
+            background-color: $yellow-bright;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span{
+                font-size: 0.7em;
+            }
+        }
+        ul{
+            padding-left: calc(8px + 0.3em);
+            margin-bottom: 0.2em;
+            li{
+                font-size: 0.8em;
+                color: #8B94B2;
+            }
+        }
+    }
+}
