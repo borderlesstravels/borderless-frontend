@@ -1,0 +1,24 @@
+@import "../../../assets/styles/variables.scss";
+
+.sub-header {
+  position: fixed;
+  width: calc(100% - 88px);
+  min-height: 90px;
+  background-color: $white;
+  left: 88px;
+  top: 80px;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include mediaM(850px) {
+    display: none;
+  }
+}
+.sub-header-space {
+  min-height: 90px;
+  width: 100%;
+  @include mediaM(850px) {
+    display: none;
+  }
+}

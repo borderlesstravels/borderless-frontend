@@ -1,12 +1,16 @@
-
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getAirport, setAirport } from "../../services/actions-reducers/airport-list";
-import { getShortlet, setShortlet } from "../../services/actions-reducers/shortlet-data";
-import { userLogin } from "../../services/actions-reducers/user-data";
+import {
+  getAirport,
+  setAirport,
+} from "../../../services/actions-reducers/airport-list";
+import {
+  getShortlet,
+  setShortlet,
+} from "../../../services/actions-reducers/shortlet-data";
+import { userLogin } from "../../../services/actions-reducers/user-data";
 
 function UtilityDatALoader(props: any) {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,8 +28,6 @@ function UtilityDatALoader(props: any) {
     // }, 3000000);
   }, [props]);
 
-  return (
-    <></>
-  );
+  return <></>;
 }
 export default UtilityDatALoader;

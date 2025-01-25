@@ -1,13 +1,15 @@
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { DownloadAppstoreFooter, DownloadPlaystoreFooter, LogoGold } from "../../assets/images";
-import { routeConstants } from "../../services/constants/route-constants";
+import {
+  DownloadAppstoreFooter,
+  DownloadPlaystoreFooter,
+  LogoGold,
+} from "../../../assets/images";
+import { Path } from "../../../navigations/routes";
 import "./footer.scss";
 
 function Footer(props: any) {
-
   useEffect(() => {}, [props]);
 
   return (
@@ -21,17 +23,17 @@ function Footer(props: any) {
           <div className="spread-info max200 mt-2">
             <a href="">
               <div className="icon">
-                <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
+                <FontAwesomeIcon icon={["fab", "facebook-f"]} />
               </div>
             </a>
             <a href="">
               <div className="icon icon-orange">
-                <FontAwesomeIcon icon={['fab', 'instagram']}/>
+                <FontAwesomeIcon icon={["fab", "instagram"]} />
               </div>
             </a>
             <a href="">
               <div className="icon">
-                <FontAwesomeIcon icon={['fab', 'twitter']}/>
+                <FontAwesomeIcon icon={["fab", "twitter"]} />
               </div>
             </a>
           </div>
@@ -52,22 +54,48 @@ function Footer(props: any) {
           <div className="row pt-5">
             <div className="col-lg-4 content-column">
               <h6>Company</h6>
-              <p><Link to={`/${routeConstants.about}`}>About</Link></p>
-              <p><Link to={`/${routeConstants.careers}`}>Careers</Link></p>
-              <p><Link to={`/${routeConstants.partners}`}>Partners</Link></p>
-              <p><Link to={`/${routeConstants.privacyPolicy}`}>Privacy Policy</Link></p>
+              <p>
+                <Link to={`/${Path.about}`}>About</Link>
+              </p>
+              <p>
+                <Link to={`/${Path.careers}`}>Careers</Link>
+              </p>
+              <p>
+                <Link to={`/${Path.partners}`}>Partners</Link>
+              </p>
+              <p>
+                <Link to={`/${Path.privacyPolicy}`}>Privacy Policy</Link>
+              </p>
             </div>
             <div className="col-lg-4 content-column">
               <h6>Contact</h6>
-              <p><Link to={`/${routeConstants.help}`}>Help</Link></p>
-              <p><Link to={`/${routeConstants.contact}`}>Contact</Link></p>
-              <p><Link to={`/${routeConstants.faq}`}>FAQ</Link></p>
+              <p>
+                <Link to={`/${Path.help}`}>Help</Link>
+              </p>
+              <p>
+                <Link to={`/${Path.contact}`}>Contact</Link>
+              </p>
+              <p>
+                <Link to={`/${Path.faq}`}>FAQ</Link>
+              </p>
             </div>
             <div className="col-lg-4 content-column">
               <h6>More</h6>
-              <p><Link to={`/${routeConstants.offers}/${routeConstants.skyRewards}`}>Sky Rewards</Link></p>
-              <p><Link to={`/${routeConstants.offers}/${routeConstants.skyflexPay}`}>Skyflex Pay</Link></p>
-              <p><Link to={`/${routeConstants.offers}/${routeConstants.travelOnCredit}`}>Travel on Credit</Link></p>
+              <p>
+                <Link to={`/${Path.offers}/${Path.skyRewards}`}>
+                  Sky Rewards
+                </Link>
+              </p>
+              <p>
+                <Link to={`/${Path.offers}/${Path.skyflexPay}`}>
+                  Skyflex Pay
+                </Link>
+              </p>
+              <p>
+                <Link to={`/${Path.offers}/${Path.travelOnCredit}`}>
+                  Travel on Credit
+                </Link>
+              </p>
             </div>
           </div>
         </div>
@@ -75,7 +103,9 @@ function Footer(props: any) {
       <hr />
       <div className="holder-1100 spread-info foot">
         <p>Copyright, Borderless 2023. All rights reserved.</p>
-        <Link to={`/${routeConstants.terms}`}><p>Terms & Conditions</p></Link>
+        <Link to={`/${Path.terms}`}>
+          <p>Terms & Conditions</p>
+        </Link>
       </div>
     </div>
   );

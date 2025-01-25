@@ -1,0 +1,148 @@
+@import "../../../../assets/styles/variables.scss";
+
+.sub-link {
+  transition: 0.3s ease;
+  position: relative;
+  p {
+    margin-bottom: 0;
+  }
+  .bottom-bar {
+    width: 2px;
+    height: 6px;
+    background-color: $transparent;
+    transition: 0.3s ease;
+    border-radius: 5px;
+  }
+  &:hover {
+    .bottom-bar {
+      width: 30px;
+      background-color: $primary-blue;
+    }
+  }
+  .pop-up {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    padding: 8px 12px;
+    border-radius: 9px;
+    background-color: $primary-blue;
+    z-index: 5;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    width: 140px;
+    p {
+      color: $white;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 3px;
+      transition: 0.2s ease;
+      border-radius: 5px;
+      &:hover {
+        background-color: $white-faint3;
+      }
+    }
+    .active-subroute {
+      p {
+        color: $orange;
+        font-weight: 600;
+      }
+    }
+  }
+}
+.active-sublink {
+  .sub-link {
+    .bottom-bar {
+      width: 30px;
+      background-color: $orange;
+    }
+    &:hover {
+      .bottom-bar {
+        width: 30px;
+        background-color: $orange-hover;
+      }
+    }
+  }
+  .bottom-bar {
+    width: 30px;
+    background-color: $orange;
+  }
+}
+
+.multi-case {
+  .offer-icon {
+    color: $orange;
+    transform: translateY(-3px);
+  }
+  .pop-up {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.1);
+    transition: 0.5s ease;
+  }
+  &:hover {
+    .pop-up {
+      opacity: 1;
+      pointer-events: all;
+      transform: scale(1);
+    }
+  }
+}
+.active-multilink {
+  .bottom-bar {
+    width: 30px;
+    background-color: $orange;
+  }
+}
+
+.web-version {
+  .sub-link {
+    padding: 0 20px;
+    p {
+      padding-top: 1.5em;
+      margin-bottom: 0;
+    }
+    .bottom-bar {
+      margin-bottom: 1.1em;
+      margin: 0.5em auto 0;
+    }
+    @include mediaM(950px) {
+      padding: 0 12px;
+    }
+  }
+  .multi {
+    padding-top: 1.5em;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+  .bottom-holder {
+    width: auto;
+    pointer-events: none;
+    .bottom-bar {
+      margin-bottom: 1.1em;
+      margin: 0.5em auto 0;
+    }
+  }
+}
+.mobile-version {
+  .sub-link {
+    padding: 5px 8px;
+    p {
+      padding-top: 1.5em;
+      margin-bottom: 0;
+    }
+    .bottom-bar {
+      margin-bottom: 1.1em;
+      margin: 0.2em 0 0 6px;
+    }
+  }
+  .multi {
+    padding: 5px 8px;
+    padding-top: 1.5em;
+  }
+  .bottom-holder {
+    padding: 0 8px;
+    .bottom-bar {
+      margin-bottom: 1.1em;
+      margin: 0.2em 0 0 6px;
+    }
+  }
+}

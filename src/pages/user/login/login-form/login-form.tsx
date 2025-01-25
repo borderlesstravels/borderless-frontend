@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Formik, FormikProps, FormikValues } from "formik";
 // import * as Yup from 'yup';
@@ -7,14 +6,17 @@ import { toast } from "react-toastify";
 import { regexConstants } from "../../../../services/constants/validation-regex";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router";
-import { routeConstants } from "../../../../services/constants/route-constants";
+import { useNavigate } from "react-router-dom";
+import { Path } from "../../../../navigations/routes";
 import "./login-form.scss";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../../../services/actions-reducers/user-data";
 import axios from "axios";
 import { apiLinks } from "../../../../config/environment";
-import { iStoreState, IUserData } from "../../../../services/constants/interfaces/store-schemas";
+import {
+  iStoreState,
+  IUserData,
+} from "../../../../services/constants/interfaces/store-schemas";
 import { useSelector } from "react-redux";
 
 interface ILoginForm {
@@ -24,21 +26,27 @@ interface ILoginForm {
   passwordReset?: Function;
 }
 
-function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}: ILoginForm) {
-
+function LoginForm({
+  poceedToVerify,
+  logUserIn,
+  switchToRegister,
+  passwordReset,
+}: ILoginForm) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [response, setResponse] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
   const user: IUserData = useSelector((state: iStoreState) => state.user);
-  const [userMode, setUserMode] = useState<'user' | 'host'>(user?.userMode || 'user');
+  const [userMode, setUserMode] = useState<"user" | "host">(
+    user?.userMode || "user"
+  );
 
   const goToRegister = () => {
-    if(switchToRegister){
+    if (switchToRegister) {
       switchToRegister();
     }
-  }
+  };
 
   const submitRequest = (values: any, controls: any) => {
     sendRequest(
@@ -49,26 +57,26 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
           loginId: values.email,
           password: values.password,
         },
-        header:{
+        header: {
           withCredentials: true,
         },
       },
       (res: any, headers: any) => {
         toast.success(res.message);
-        if(res.user) {
-            dispatch(userLogin({...res.user, userMode}));
-          if(logUserIn) {
+        if (res.user) {
+          dispatch(userLogin({ ...res.user, userMode }));
+          if (logUserIn) {
             logUserIn();
           }
         }
         controls.setSubmitting(false);
       },
       (err: any) => {
-        toast.error(err?.error || err?.message || 'Request Failed');
-        setResponse(err?.error || err?.message || 'Request Failed');
-        if(err?.message === 'Unverified email') {
-          if(poceedToVerify) {
-            dispatch(userLogin({"userId": err?.userId, userMode}));
+        toast.error(err?.error || err?.message || "Request Failed");
+        setResponse(err?.error || err?.message || "Request Failed");
+        if (err?.message === "Unverified email") {
+          if (poceedToVerify) {
+            dispatch(userLogin({ userId: err?.userId, userMode }));
             sendRequest(
               {
                 url: "user-auth/resend-verification-otp",
@@ -117,28 +125,27 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
   };
 
   const loginWithGoogle = () => {
-    toast('Google login under development')
-  }
+    toast("Google login under development");
+  };
 
   const loginWithFacebook = () => {
-    toast('Facebook login under development')
-  }
+    toast("Facebook login under development");
+  };
 
   const requestPasswordReset = () => {
-    if(passwordReset){
+    if (passwordReset) {
       passwordReset();
     }
-  }
-
+  };
 
   useEffect(() => {
-    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-    dispatch(userLogin({userMode}));
-  },[userMode]);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    dispatch(userLogin({ userMode }));
+  }, [userMode]);
 
   return (
     <div className="dialogue-container">
-      <h6>{userMode === 'host' && <span>Host </span>}Log In</h6>
+      <h6>{userMode === "host" && <span>Host </span>}Log In</h6>
       <p className="brief">Enter details to log in to your account</p>
       <Formik
         initialValues={{
@@ -146,9 +153,8 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
           password: "",
         }}
         validate={(value) => validate(value)}
-        onSubmit={(values, controls) =>
-          submitRequest(values, controls)
-        }>
+        onSubmit={(values, controls) => submitRequest(values, controls)}
+      >
         {(
           props: FormikProps<{
             email: string;
@@ -165,7 +171,12 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
             handleSubmit,
           } = props;
           return (
-            <form action="" className="row" onSubmit={handleSubmit} onClick={() => setResponse('')}>
+            <form
+              action=""
+              className="row"
+              onSubmit={handleSubmit}
+              onClick={() => setResponse("")}
+            >
               <div className="col-md-12">
                 <div className="reg-card">
                   <label className="text-left">Email Address</label>
@@ -177,9 +188,7 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
                     onBlur={handleBlur}
                     onFocus={() => (errors.email = "")}
                     onChange={handleChange}
-                    className={
-                      errors.email && touched.email ? "im-error" : ""
-                    }
+                    className={errors.email && touched.email ? "im-error" : ""}
                   />
                   {errors.email && touched.email && (
                     <p className="reduced error-popup pt-1 mb-0">
@@ -204,11 +213,17 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
                     }
                   />
                   <div className="password-shower">
-                    {
-                      showPassword ?
-                      <FontAwesomeIcon icon={'eye-slash'} onClick={toggleShowPassword}/> :
-                      <FontAwesomeIcon icon={'eye'} onClick={toggleShowPassword}/>
-                    }
+                    {showPassword ? (
+                      <FontAwesomeIcon
+                        icon={"eye-slash"}
+                        onClick={toggleShowPassword}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={"eye"}
+                        onClick={toggleShowPassword}
+                      />
+                    )}
                   </div>
                   {errors.password && touched.password && (
                     <p className="reduced error-popup pt-1 mb-0">
@@ -221,10 +236,13 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
                 <button
                   type="submit"
                   className="btn btn-con mx-0"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? "Processing.." : "Log In"}
                 </button>
-                {response && <div className="reduced error-popup">{response}</div>}
+                {response && (
+                  <div className="reduced error-popup">{response}</div>
+                )}
               </div>
             </form>
           );
@@ -234,7 +252,7 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
         <div className="col-md-6 py-2">
           <div className="social-login" onClick={loginWithGoogle}>
             <p className="mb-0">
-              <FontAwesomeIcon icon={['fab', 'google']} className="ic-google" />
+              <FontAwesomeIcon icon={["fab", "google"]} className="ic-google" />
               <span>Sign in with Google</span>
             </p>
           </div>
@@ -242,30 +260,35 @@ function LoginForm({poceedToVerify, logUserIn, switchToRegister, passwordReset}:
         <div className="col-md-6 py-2">
           <div className="social-login" onClick={loginWithFacebook}>
             <p className="mb-0">
-              <FontAwesomeIcon icon={['fab', 'facebook']} className="ic-facebook" />
+              <FontAwesomeIcon
+                icon={["fab", "facebook"]}
+                className="ic-facebook"
+              />
               <span>Sign in with Google</span>
             </p>
           </div>
         </div>
         <div className="col-md-12 py-2">
-            {userMode === 'user' && <p className="mb-0 alternate-action">
-             Log in as a
-              <span onClick={() => setUserMode('host')}> Host</span>
-            </p>}
-            {userMode === 'host' && <p className="mb-0 alternate-action">
-            Log in as a 
-              <span onClick={() => setUserMode('user')}> User</span>
-            </p>}
-            <p className="mb-0 alternate-action pt-2">
-              Don't yet have an account? 
-              <span onClick={goToRegister}> Sign Up</span>
+          {userMode === "user" && (
+            <p className="mb-0 alternate-action">
+              Log in as a<span onClick={() => setUserMode("host")}> Host</span>
             </p>
+          )}
+          {userMode === "host" && (
+            <p className="mb-0 alternate-action">
+              Log in as a<span onClick={() => setUserMode("user")}> User</span>
+            </p>
+          )}
+          <p className="mb-0 alternate-action pt-2">
+            Don't yet have an account?
+            <span onClick={goToRegister}> Sign Up</span>
+          </p>
         </div>
         <div className="col-md-12 py-2">
-            <p className="mb-0 alternate-action">
-              Forgotten your password?
-              <span onClick={requestPasswordReset}> Recover password</span>
-            </p>
+          <p className="mb-0 alternate-action">
+            Forgotten your password?
+            <span onClick={requestPasswordReset}> Recover password</span>
+          </p>
         </div>
       </div>
     </div>

@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import AuthEnforcerModal from "../../components/block-components/auth-enforcer-modal/auth-enforcer-modal";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
-import { toast } from "react-toastify";
-import AuthEnforcerModal from "../components/block-components/auth-enforcer-modal/auth-enforcer-modal";
-import { userLogin, userLogout } from "../services/actions-reducers/user-data";
-import { iStoreState } from "../services/constants/interfaces/store-schemas";
-// import { routeConstants } from '../services/constants/route-constants';
-import { sendRequest } from "../services/utils/request";
+import { iStoreState } from "../../services/constants/interfaces/store-schemas";
+import { sendRequest } from "../../services/utils/request";
+import {
+  userLogin,
+  userLogout,
+} from "../../services/actions-reducers/user-data";
 
-const ProctedRoutes = () => {
+const ProtectedLayout = () => {
   // const token = sessionStorage.getItem('token');
   const dispatch = useDispatch();
   const verified = useSelector(
@@ -65,7 +66,6 @@ const ProctedRoutes = () => {
   }, [verified]);
 
   return (
-    // verified ? <Outlet/> : <Navigate to={`/${routeConstants.login}`} />
     <>
       <Outlet />
       {overlayMode !== 2 && (
@@ -79,4 +79,4 @@ const ProctedRoutes = () => {
   );
 };
 
-export default ProctedRoutes;
+export default ProtectedLayout;

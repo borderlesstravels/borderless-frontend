@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import {
   PropertyRecentSearch1,
   PropertyRecentSearch2,
@@ -8,7 +8,7 @@ import {
   PropertyRecentSearch4,
 } from "../../../../assets/images";
 import { resourceLinks } from "../../../../config/environment";
-import { routeConstants } from "../../../../services/constants/route-constants";
+import { Path } from "../../../../navigations/routes";
 import {
   formatNumber,
   stringifyFilter,
@@ -102,7 +102,7 @@ function StaysPage(props: any) {
         startDate: searchParam?.startDate,
         endDate: searchParam?.endDate,
       };
-      navigate(`/${routeConstants.stayPreview}/${id}${stringifyFilter(param)}`);
+      navigate(`/${Path.stayPreview}/${id}${stringifyFilter(param)}`);
     }
   };
 
