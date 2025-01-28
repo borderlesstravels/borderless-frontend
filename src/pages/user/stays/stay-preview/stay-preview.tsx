@@ -21,10 +21,10 @@ import {
 import "./stay-preview.scss";
 import { iFullShortletInfo } from "../../../host/add-stay/add-shortlet/add-shortlet-data";
 import { pickCurrency } from "../../../../services/utils/currency-handler";
-import { resourceLinks } from "../../../../config/environment";
 import AmenitiesPage from "./amenities/amenities";
 import { useSearchParams } from "react-router-dom";
 import ReviewsComp from "../../../../components/block-components/reviews-comp/reviews-sect";
+import { SHORTLET_IMAGES } from "../../../../constants/resourceLinks";
 
 function StayPreviewPage(props: any) {
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ function StayPreviewPage(props: any) {
         const refinedData = res.data;
         refinedData.images = res.data.images
           .split(", ")
-          .map((image: string) => resourceLinks.shortletImages + image);
+          .map((image: string) => SHORTLET_IMAGES + image);
         setStayDetails(refinedData);
         setActiveImage(refinedData.images[0]);
         console.log({ refinedData });

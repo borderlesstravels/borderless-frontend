@@ -1,19 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Formik, FormikValues } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { getShortlet } from '../../../../../services/actions-reducers/shortlet-data';
-import { iStoreState } from '../../../../../services/constants/interfaces/store-schemas';
-import { clipToLength } from '../../../../../services/utils/data-manipulation-utilits';
-import { sendRequest } from '../../../../../services/utils/request';
-import TypeSuggestComponent from '../../../../base-components/type-suggest/type-suggest';
-import AppPopup from '../../../app-popup/app-popup';
-import './location-selection.scss';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FormikValues } from "formik";
+import React, { useEffect, useState } from "react";
+import TypeSuggestComponent from "../../../../base-components/type-suggest/type-suggest";
+import "./location-selection.scss";
+import { useFetchShortletsLocationsQuery } from "../../../../../store/apis/shortlets";
 
 interface ILocationSelection {
-  address: any,
-  geolocation: any
+  address: any;
+  geolocation: any;
 }
 interface iLocationProps {
   setLocation: Function;
@@ -22,55 +16,53 @@ interface iLocationProps {
 }
 
 function LocationSelectionComp(props: iLocationProps) {
-
-  const dispatch = useDispatch();
   const [showPopup, setShowPopup] = useState<0 | 1 | 2>(0);
-  const [location, setLocation] = useState<ILocationSelection>(props.location || {address: undefined, geolocation: undefined});
-  const [confirmedLocation, setConfirmedLocation] = useState<ILocationSelection>(props.location || {address: undefined, geolocation: undefined});
+  const [location, setLocation] = useState<ILocationSelection>(
+    props.location || { address: undefined, geolocation: undefined }
+  );
+  const [confirmedLocation, setConfirmedLocation] =
+    useState<ILocationSelection>(
+      props.location || { address: undefined, geolocation: undefined }
+    );
 
-  const shortletList = useSelector((state: iStoreState) => state.shortletList);
+  const { data: shortletsData } = useFetchShortletsLocationsQuery();
+  const shortletList = shortletsData?.data || [];
 
   const toggleShowPopup = (status?: 0 | 1 | 2) => {
     setShowPopup(status || 0);
-  }
+  };
 
-  const validate = (values: FormikValues) => {}
+  const validate = (values: FormikValues) => {};
 
-  const submitLocations = (values: FormikValues, controls: any) => {}
+  const submitLocations = (values: FormikValues, controls: any) => {};
 
-  const updateSelection = (data: any, type: 'address' | 'geolocation') => {
-    const currentLocation = {...location};
-    if(type === 'address') {
+  const updateSelection = (data: any, type: "address" | "geolocation") => {
+    const currentLocation = { ...location };
+    if (type === "address") {
       currentLocation.address = data;
     } else {
       currentLocation.geolocation = data;
     }
     setLocation(currentLocation);
-    setConfirmedLocation({address: undefined, geolocation: undefined});
-  }
+    setConfirmedLocation({ address: undefined, geolocation: undefined });
+  };
 
   const confirmLocation = () => {
     setConfirmedLocation(location);
     toggleShowPopup(1);
-  }
+  };
 
   useEffect(() => {
-    if(!shortletList || shortletList.length === 0) {
-      dispatch(getShortlet());
-    }
-  }, [props.componentState])
-
-  useEffect(() => {
-    if(location.address) {
+    if (location.address) {
       setConfirmedLocation(location);
-      if(showPopup === 2){
+      if (showPopup === 2) {
         toggleShowPopup(1);
       }
     }
-  }, [location])
+  }, [location]);
   useEffect(() => {
     props.setLocation(confirmedLocation);
-  }, [confirmedLocation])
+  }, [confirmedLocation]);
 
   return (
     <>
@@ -111,13 +103,21 @@ function LocationSelectionComp(props: iLocationProps) {
           </div>
         </AppPopup>
       </div> */}
-      <div className='location-case pt-3 pb-2'>
-        <div className={'location-selection selector2' + (location.address?.state ? ' selected-label' : '')}>
-          <div className='label'><FontAwesomeIcon icon={'map-marker-alt'} className='fainter-tx' /> Location</div>
+      <div className="location-case pt-3 pb-2">
+        <div
+          className={
+            "location-selection selector2" +
+            (location.address?.state ? " selected-label" : "")
+          }
+        >
+          <div className="label">
+            <FontAwesomeIcon icon={"map-marker-alt"} className="fainter-tx" />{" "}
+            Location
+          </div>
           <TypeSuggestComponent
             data={shortletList}
-            typePlaceholder='Enter location'
-            floatOption 
+            typePlaceholder="Enter location"
+            floatOption
             initialValue={location.address?.lga}
             // initialValue={
             //   `
@@ -126,14 +126,17 @@ function LocationSelectionComp(props: iLocationProps) {
             //   ${location.address?.country ? (', ' + location.address?.country) : ''}
             //   `
             // }
-            selected={(data: any) => updateSelection(data, 'address')}
-            subKey='lga'
-            subKey2='state'
-            subKey3='country'
+            selected={(data: any) => updateSelection(data, "address")}
+            subKey="lga"
+            subKey2="state"
+            subKey3="country"
             commaSeparated
             listLength={20}
           />
-          <FontAwesomeIcon className='fainter-tx' icon={'location-crosshairs'} />
+          <FontAwesomeIcon
+            className="fainter-tx"
+            icon={"location-crosshairs"}
+          />
         </div>
       </div>
     </>

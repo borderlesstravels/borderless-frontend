@@ -9,14 +9,9 @@ import AdminSignupForm from "../../../pages/user/signup/signup-form/signup-form"
 import VerifyEmailForm from "../../../pages/user/verify-email/verify-email-form/verify-email-form";
 import RetrievePasswordForm from "../../../pages/user/retrieve-password/retrieve-password/retrieve-password-form";
 import ResetPasswordForm from "../../../pages/user/reset-password/reset-password-form/reset-password-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Path } from "../../../navigations/routes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "react-redux";
-import { userLogin } from "../../../services/actions-reducers/user-data";
-import { sendRequest } from "../../../services/utils/request";
-import { useSelector } from "react-redux";
-import { iStoreState } from "../../../services/constants/interfaces/store-schemas";
 
 const AuthEnforcerModal = (props: {
   overlayMode: number;
@@ -30,28 +25,27 @@ const AuthEnforcerModal = (props: {
   const [closeClass, setCloseClass] = useState<"close-false" | "close-true">(
     "close-false"
   );
-  const userType: "user" | "host" = useSelector(
-    (state: iStoreState) => state?.user?.userMode || "user"
-  );
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const logUserIn = (user?: any) => {
-    if (user) {
-      // sendRequest(
-      //   {
-      //     url: userType === 'user' ? 'user-auth/logout' : 'host-profile/logout',
-      //     method: "POST",
-      //     body: {},
-      //   },
-      //   () => {
-      //     dispatch(userLogout());
-      //     navigateTo(`${Path.home}`);
-      //   },
-      //   () => {}
-      // );
-      dispatch(userLogin(user));
-    }
+    // if (user) {
+    //   // sendRequest(
+    //   //   {
+    //   //     url: userType === 'user' ? 'user-auth/logout' : 'host-profile/logout',
+    //   //     method: "POST",
+    //   //     body: {},
+    //   //   },
+    //   //   () => {
+    //   //     dispatch(userLogout());
+    //   //     navigateTo(`${Path.home}`);
+    //   //   },
+    //   //   () => {}
+    //   // );
+    //   // dispatch(userLogin(user));
+    //   // dispatch(handleLogin({ user, mode: "user" }));
+    // }
     setAuthPage("login");
     if (props.proceed) {
       closeModal();
@@ -61,6 +55,8 @@ const AuthEnforcerModal = (props: {
   };
 
   const goToLogin = () => {
+    searchParams.delete("mode");
+    setSearchParams(searchParams);
     setAuthPage("login");
   };
 
@@ -68,7 +64,10 @@ const AuthEnforcerModal = (props: {
     setAuthPage("register");
   };
 
-  const poceedToVerify = () => {
+  const poceedToVerify = (id: string, mode: string) => {
+    searchParams.set("id", id);
+    searchParams.set("mode", mode);
+    setSearchParams(searchParams);
     setAuthPage("verify");
   };
 
@@ -76,13 +75,16 @@ const AuthEnforcerModal = (props: {
     setAuthPage("reset_password");
   };
 
-  const forgotPassword = () => {
+  const forgotPassword = (mode: string) => {
+    searchParams.set("mode", mode);
+    setSearchParams(searchParams);
     setAuthPage("forgot_password");
   };
 
   const hideCloser = (ev: any) => {
     setCloseClass("close-false");
   };
+
   const showCloser = (ev: any) => {
     setCloseClass("close-true");
   };
@@ -109,6 +111,7 @@ const AuthEnforcerModal = (props: {
       closeModal();
       setTimeout(() => props.updateOverlayMode(2), 500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.overlayMode]);
 
   return (

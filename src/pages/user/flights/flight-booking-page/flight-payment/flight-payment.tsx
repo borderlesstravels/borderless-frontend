@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import MiniLoader from "../../../../../components/block-components/mini-loader/mini-loader";
-import { apiLinks } from "../../../../../config/environment";
 import { PaystackButtonProps } from "../../../../../services/constants/interfaces/utility-schemas";
 import { Path } from "../../../../../navigations/routes";
-import { sendRequest } from "../../../../../services/utils/request";
 import { IFlightPaymentData } from "../flight-booking-service";
 import "./flight-payment.scss";
+import { PAYSTACK_PUBLIC_KEY } from "../../../../../constants/apiLinks";
+import { useRecordFlightPaymentMutation } from "../../../../../store/apis/payments";
 
 interface IFlightProps {
   data: IFlightPaymentData;
@@ -16,68 +16,67 @@ interface IFlightProps {
 
 function FlightPayment(props: IFlightProps) {
   const navigate = useNavigate();
-  const [processing, setProcessing] = useState<0 | 1 | 2 | 3>(0);
+  const [currentStage, setCurrentStage] = useState<
+    "initial" | "loading" | "error" | "complete"
+  >("initial");
+  const [recordFlightMutate] = useRecordFlightPaymentMutation();
 
-  const recordPayment = (response: any) => {
-    setProcessing(1);
-    sendRequest(
-      {
-        url: "website/record-payment",
-        method: "POST",
-        body: {
+  const recordPayment = useCallback(
+    async (response: any) => {
+      try {
+        setCurrentStage("loading");
+        const res = await recordFlightMutate({
           service_name: "flight",
           booking_reference: props.data.booking_reference,
           transaction_reference: response.reference,
           amount: props.data.amount / 100,
           time: new Date().toISOString(),
-        },
-      },
-      (res: any) => {
-        toast.success("Booking complete");
-        setProcessing(3);
-      },
-      (err: any) => {
-        toast.error(err.error || "Request failed");
-        setProcessing(2);
+        });
+
+        if (res) {
+          setCurrentStage("complete");
+          toast.success("Booking complete");
+        }
+      } catch (error: any) {
+        setCurrentStage("error");
+        toast.error(error.error || "Request failed");
       }
-    );
-  };
+    },
+    [props.data.amount, props.data.booking_reference, recordFlightMutate]
+  );
+
   const goToBookings = () => {
     navigate(`/${Path.myBookings}`);
   };
   const closePayment = (error: any) => {
-    setProcessing(0);
+    setCurrentStage("initial");
   };
 
-  const [paystackProps, setPaystackProps] = useState<PaystackButtonProps>({
-    email: props.data.email,
-    amount: Math.ceil(props.data.amount),
-    publicKey: apiLinks.paystackPublicKey,
-    text: "Pay Now",
-    label: "Borderless Travels",
-    metadata: {
-      custom_fields: [],
-      booking_reference: props.data.booking_reference,
-    },
-    onSuccess: recordPayment,
-    onClose: closePayment,
-  });
-
-  useEffect(() => {
-    // setTimeout(() => {
-    //   toast.error('Failed to load Flight details');
-    //   toast.error('Field Validation error');
-    // }, 5000);
-    // setTimeout(() => {
-    //   toast.error('Detail reload Failed');
-    //   toast.error('Validation Failed');
-    // }, 15000);
-  }, [props]);
+  const paystackProps = useMemo<PaystackButtonProps>(() => {
+    return {
+      email: props.data.email,
+      amount: Math.ceil(props.data.amount),
+      publicKey: PAYSTACK_PUBLIC_KEY,
+      text: "Pay Now",
+      label: "Borderless Travels",
+      metadata: {
+        custom_fields: [],
+        booking_reference: props.data.booking_reference,
+      },
+      onSuccess: recordPayment,
+      onClose: closePayment,
+    };
+  }, [
+    props.data.amount,
+    props.data.booking_reference,
+    props.data.email,
+    recordPayment,
+  ]);
 
   return (
     <div className="flight-payment loader-holder">
       <div className="center-info-col pb-4 max300">
-        {processing === 0 && (
+        {currentStage === "initial" && (
           <>
             <p className="text-center black-tx">
               Your flight data has been captured, Please make your payment to
@@ -86,12 +85,13 @@ function FlightPayment(props: IFlightProps) {
             <PaystackButton
               {...paystackProps}
               className={
-                "paystack-button" + (processing !== 0 ? " deactivated" : "")
+                "paystack-button" +
+                (currentStage !== "initial" ? " deactivated" : "")
               }
             />
           </>
         )}
-        {processing === 1 && (
+        {currentStage === "loading" && (
           <div className="center-info-col pb-4 max300">
             <div>
               <MiniLoader />
@@ -101,7 +101,7 @@ function FlightPayment(props: IFlightProps) {
             </p>
           </div>
         )}
-        {processing === 2 && (
+        {currentStage === "error" && (
           <div className="center-info-col pb-4 max300">
             <p className="text-center black-tx mb-3">
               There was a problem in saving your transaction record
@@ -111,7 +111,7 @@ function FlightPayment(props: IFlightProps) {
             </button>
           </div>
         )}
-        {processing === 3 && (
+        {currentStage === "complete" && (
           <div className="center-info-col pb-4 max300">
             <p className="text-center black-tx mb-3">Booking complete</p>
             <button className="paystack-button" onClick={goToBookings}>

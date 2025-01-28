@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { PendingTag } from "../../../../../assets/images";
 import MiniLoader from "../../../../../components/block-components/mini-loader/mini-loader";
-import { apiLinks } from "../../../../../config/environment";
 import { Path } from "../../../../../navigations/routes";
 import {
   formatDate,
@@ -38,7 +37,6 @@ function StayBookingRecords(props: any) {
   };
 
   const viewDetails = (id: string) => {
-    // window.open(apiLinks.url + 'stay/stay-booking-details/' + reference);
     navigate(`/${Path.stayBookingDetail}/${id}`);
   };
 

@@ -15,6 +15,7 @@ import {
 } from "../../../../services/utils/data-manipulation-utilits";
 import { formatTime, getFlightToAndFrom } from "./flight-search-service";
 import FlightSearchFilter from "./flight-search-filter/flight-search-filter";
+import { useFlightOfferSearchMutation } from "../../../../store/apis/flights";
 
 function FlightSearchPage(props: any) {
   const navigate = useNavigate();
@@ -25,29 +26,28 @@ function FlightSearchPage(props: any) {
   const [flightList, setFlightList] = useState<any[]>([]);
   const [filteredFlightList, setFilteredFlightList] = useState<any[]>([]);
 
-  const fetchFlights = (flightData = fData) => {
-    setLoading(true);
-    setFlightsSearched(true);
-    setFlightList([]);
+  const [flightOfferSearch] = useFlightOfferSearchMutation();
 
-    sendRequest(
-      {
-        url: "flight/flight-offer-search",
-        method: "POST",
-        body: {
-          origin: fData.location?.from?.iata_code,
-          destination: fData.location?.to?.iata_code,
-          departure_date: formatDateToUTC(fData.date?.startDate),
-          adults: fData.flightClass ? fData.flightClass.adultCount : 0,
-          cabin: fData.flightClass?.cabinClass.toLocaleLowerCase(),
-          children: `${fData.flightClass?.childrenCount || 0}`,
-          infants: fData.flightClass ? fData.flightClass.infantCount : 0,
-          return_date: fData.date?.endDate
-            ? formatDateToUTC(fData.date?.endDate)
-            : "",
-        },
-      },
-      (res: any) => {
+  const fetchFlights = async (flightData = fData) => {
+    try {
+      setLoading(true);
+      setFlightsSearched(true);
+      setFlightList([]);
+
+      const res = await flightOfferSearch({
+        origin: fData.location?.from?.iata_code,
+        destination: fData.location?.to?.iata_code,
+        departure_date: formatDateToUTC(fData.date?.startDate),
+        adults: fData.flightClass ? fData.flightClass.adultCount : 0,
+        cabin: fData.flightClass?.cabinClass.toLocaleLowerCase() || "",
+        children: `${fData.flightClass?.childrenCount || 0}` as any,
+        infants: fData.flightClass ? fData.flightClass.infantCount : 0,
+        return_date: fData.date?.endDate
+          ? formatDateToUTC(fData.date?.endDate)
+          : "",
+      }).unwrap();
+
+      if (res) {
         if (Array.isArray(res.data)) {
           setFlightList(res.data);
           setFilteredFlightList(res.data);
@@ -55,13 +55,45 @@ function FlightSearchPage(props: any) {
           setFlightList([]);
         }
         setLoading(false);
-      },
-      (err: any) => {
-        setLoading(false);
-        setFlightList([]);
-        setFilteredFlightList([]);
       }
-    );
+
+      // sendRequest(
+      //   {
+      //     url: "flight/flight-offer-search",
+      //     method: "POST",
+      //     body: {
+      //       origin: fData.location?.from?.iata_code,
+      //       destination: fData.location?.to?.iata_code,
+      //       departure_date: formatDateToUTC(fData.date?.startDate),
+      //       adults: fData.flightClass ? fData.flightClass.adultCount : 0,
+      //       cabin: fData.flightClass?.cabinClass.toLocaleLowerCase(),
+      //       children: `${fData.flightClass?.childrenCount || 0}`,
+      //       infants: fData.flightClass ? fData.flightClass.infantCount : 0,
+      //       return_date: fData.date?.endDate
+      //         ? formatDateToUTC(fData.date?.endDate)
+      //         : "",
+      //     },
+      //   },
+      //   (res: any) => {
+      //     if (Array.isArray(res.data)) {
+      //       setFlightList(res.data);
+      //       setFilteredFlightList(res.data);
+      //     } else {
+      //       setFlightList([]);
+      //     }
+      //     setLoading(false);
+      //   },
+      //   (err: any) => {
+      //     setLoading(false);
+      //     setFlightList([]);
+      //     setFilteredFlightList([]);
+      //   }
+      // );
+    } catch (error) {
+      setLoading(false);
+      setFlightList([]);
+      setFilteredFlightList([]);
+    }
   };
 
   const updateFilter = (updatedList: any[]) => {

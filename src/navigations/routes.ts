@@ -6,7 +6,7 @@ export enum Path {
   login = "log-in",
   loginTest = "log-in-test",
   signup = "sign-up",
-  verfyEmail = "verfy-email",
+  verfyEmail = "verify-email",
   requestPassword = "request-password",
   updatePassword = "update-password",
   offers = "offers",

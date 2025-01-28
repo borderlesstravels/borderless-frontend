@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -17,24 +17,29 @@ import {
   formatDate,
   formatNumber,
 } from "../../../../services/utils/data-manipulation-utilits";
-import { sendRequest } from "../../../../services/utils/request";
 import {
   formatTime,
   getFlightToAndFrom,
   processPassengerPriceList,
-  sampleFlights,
 } from "../flight-search/flight-search-service";
 import FlightImageSlideSect from "./flight-image-slide/flight-image-slide";
 import "./flight-preview.scss";
+import { useGetConfirmFlightPriceQuery } from "../../../../store/apis/flights";
 
 function FlightPreviewPage(props: any) {
   const navigate = useNavigate();
   const flightId = useParams().id || "";
-  const [loading, setLoading] = useState(0);
-  const [flightDetails, setFlightDetails] = useState<any>({
-    outbound: [],
-    inbound: [],
+
+  const {
+    data: flightPriceData,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetConfirmFlightPriceQuery({
+    id: flightId,
   });
+  const flightDetails = flightPriceData?.data;
+
   const airportList = useSelector((state: iStoreState) => state.airportList);
 
   const flightFeatureImageList = [
@@ -43,28 +48,6 @@ function FlightPreviewPage(props: any) {
     FlightFeatureImage3,
     FlightFeatureImage4,
   ];
-
-  const getFlightDetails = () => {
-    setLoading(0);
-
-    sendRequest(
-      {
-        url: "flight/confirm-price/" + flightId,
-        method: "GET",
-      },
-      (res: any) => {
-        setFlightDetails(res.data);
-        setLoading(1);
-      },
-      (err: any) => {
-        setLoading(2);
-      }
-    );
-  };
-
-  const reloadData = () => {
-    getFlightDetails();
-  };
 
   const exitPage = () => {
     navigate(`/${Path.flights}`);
@@ -82,25 +65,20 @@ function FlightPreviewPage(props: any) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getFlightDetails();
-    console.log({ airportList });
-  }, [props]);
+  }, []);
 
   return (
     <>
-      {loading === 0 && (
+      {isLoading && (
         <div className="loader-holder">
           <MiniLoader />
         </div>
       )}
-      {loading === 2 && (
+      {isError && (
         <div className="loader-holder">
           <div className="error-box">
             <h3>An error occured while loading</h3>
-            <button
-              className="my-2 mx-2 confirmation-button"
-              onClick={reloadData}
-            >
+            <button className="my-2 mx-2 confirmation-button" onClick={refetch}>
               Reload
             </button>
             <button className="my-2 mx-2 cancel" onClick={exitPage}>
@@ -109,7 +87,7 @@ function FlightPreviewPage(props: any) {
           </div>
         </div>
       )}
-      {loading === 1 && (
+      {!isLoading && flightDetails && (
         <div className="flight-preview">
           <div className="preview-sect">
             <h5>
@@ -124,24 +102,24 @@ function FlightPreviewPage(props: any) {
               <span className="px-2 fainter-tx"> &gt; </span>
               <span className="increased-soft">
                 {" "}
-                {flightDetails.outbound[0]?.airline_details?.name}
+                {flightDetails?.outbound[0]?.airline_details?.name}
               </span>
             </h5>
             <div className="spread-info-web pt-3 pb-2">
               <h2 className="f700">
-                {flightDetails.outbound[0]?.airline_details?.name}{" "}
-                {flightDetails.fare_basis}
+                {flightDetails?.outbound[0]?.airline_details?.name}{" "}
+                {flightDetails?.fare_basis}
               </h2>
               <h2 className="pt-2 orange-tx increased-x number-bold">
-                <span className="reduced-im">{flightDetails.currency}</span>{" "}
-                {formatNumber(Math.ceil(flightDetails.amount))}
+                <span className="reduced-im">{flightDetails?.currency}</span>{" "}
+                {formatNumber(Math.ceil(Number(flightDetails?.amount)))}
               </h2>
             </div>
 
             <div className="spread-info-web pb-3">
               <p className="faint-tx py-2 mb-0">
                 <FontAwesomeIcon icon={"map-marker"} /> &nbsp;
-                {flightDetails.outbound[0]?.airport_from_details?.country}
+                {flightDetails?.outbound[0]?.airport_from_details?.country}
               </p>
               <div className="description-grid-50">
                 <div className="center-info save-flight">
@@ -162,19 +140,19 @@ function FlightPreviewPage(props: any) {
               <div className="spread-info-web pt-5 pb-2">
                 <h5 className="f600 increased sentence-case mb-0">
                   basic{" "}
-                  {flightDetails.outbound[0]?.cabin_type?.toLocaleLowerCase()}{" "}
+                  {flightDetails?.outbound[0]?.cabin_type?.toLocaleLowerCase()}{" "}
                   features
                 </h5>
                 <p className="sentence-case mb-0">
                   Class:{" "}
                   <span className="f600">
-                    {flightDetails.outbound[0]?.cabin_type.toLocaleLowerCase()}
+                    {flightDetails?.outbound[0]?.cabin_type.toLocaleLowerCase()}
                   </span>
                 </p>
                 {/* <div className='spread-info'>
                   <span className='cabin-type-indicator'>
                     <input type="checkbox" 
-                      checked={flightDetails.outbound[0]?.cabin_type.toLocaleLowerCase() === 'economy'} 
+                      checked={flightDetails?.outbound[0]?.cabin_type.toLocaleLowerCase() === 'economy'} 
                       onChange={(e) => e.preventDefault()}
                       name="" 
                       id="" 
@@ -183,7 +161,7 @@ function FlightPreviewPage(props: any) {
                   </span>
                   <span className='cabin-type-indicator'>
                     <input type="checkbox" 
-                      checked={flightDetails.outbound[0]?.cabin_type.toLocaleLowerCase() === 'first class'} 
+                      checked={flightDetails?.outbound[0]?.cabin_type.toLocaleLowerCase() === 'first class'} 
                       onChange={(e) => e.preventDefault()}
                       name="" 
                       id="" 
@@ -192,7 +170,7 @@ function FlightPreviewPage(props: any) {
                   </span>
                   <span className='cabin-type-indicator'>
                     <input type="checkbox" 
-                      checked={flightDetails.outbound[0]?.cabin_type.toLocaleLowerCase() === 'business class'} 
+                      checked={flightDetails?.outbound[0]?.cabin_type.toLocaleLowerCase() === 'business class'} 
                       onChange={(e) => e.preventDefault()}
                       name="" 
                       id="" 
@@ -211,12 +189,12 @@ function FlightPreviewPage(props: any) {
             </div>
             <div className="policy-card mb-4">
               <h5 className="f600 increased">
-                {flightDetails.outbound[0]?.airline_details?.name} Airline
+                {flightDetails?.outbound[0]?.airline_details?.name} Airline
                 Policies
               </h5>
               <p className="text-center mb-1">No policies available</p>
             </div>
-            {flightDetails.outbound.map((trip: any, tripIndex: number) => (
+            {flightDetails?.outbound.map((trip: any, tripIndex: number) => (
               <div className="mb-4 trip-card" key={tripIndex}>
                 <div className="spread-info pb-i">
                   <p className="f400 mb-0 number-medium">
@@ -328,14 +306,14 @@ function FlightPreviewPage(props: any) {
                 </div>
               </div>
             ))}
-            {flightDetails.inbound.length > 0 && (
+            {flightDetails && flightDetails?.inbound?.length > 0 && (
               <div className="py-2">
                 <hr className="text-center" />
                 <h6 className="text-center mb-0">Return Trip</h6>
                 <hr className="text-center" />
               </div>
             )}
-            {flightDetails.inbound.map((trip: any, tripIndex: number) => (
+            {flightDetails?.inbound.map((trip: any, tripIndex: number) => (
               <div className="mb-4 trip-card" key={tripIndex}>
                 <div className="spread-info pb-i">
                   <p className="f400 mb-0 number-medium">
@@ -475,7 +453,7 @@ function FlightPreviewPage(props: any) {
                     <div className="spread-info">
                       <h6 className="f300 reduced-soft">Base Fare</h6>
                       <h6 className="number-light reduced-soft">
-                        {formatNumber(Math.ceil(flightDetails?.amount))}
+                        {formatNumber(Math.ceil(Number(flightDetails?.amount)))}
                       </h6>
                     </div>
                     <div className="spread-info">
@@ -493,7 +471,7 @@ function FlightPreviewPage(props: any) {
                     <div className="spread-info">
                       <h6>Total</h6>
                       <h6 className="number-medium">
-                        {formatNumber(Math.ceil(flightDetails?.amount))}
+                        {formatNumber(Math.ceil(Number(flightDetails?.amount)))}
                       </h6>
                     </div>
                   </div>
@@ -511,7 +489,7 @@ function FlightPreviewPage(props: any) {
             <div className="">
               <button
                 className="flight-button"
-                onClick={() => bookFlight(flightDetails.id)}
+                onClick={() => bookFlight(flightDetails?.id || "")}
               >
                 Book Flight
               </button>

@@ -7,9 +7,14 @@ import {
   AboutWhyChooseImage,
   AboutWhyChooseShell,
 } from "../../../assets/images";
-import { socialLinks } from "../../../config/environment";
 import { Path } from "../../../navigations/routes";
 import "./about.scss";
+import {
+  FACEBOOK_URL,
+  INSTAGRAM_URL,
+  TWITTER_URL,
+  YOUTUBE_URL,
+} from "../../../constants/socialLinks";
 
 function AboutPage() {
   useEffect(() => {
@@ -48,19 +53,19 @@ function AboutPage() {
             data-aos="fade-up"
             data-aos-delay="300"
           >
-            <a href={socialLinks.facebook} target={"_blank"}>
+            <a href={FACEBOOK_URL} target={"_blank"}>
               <FontAwesomeIcon className="awesome" icon={["fab", "facebook"]} />
             </a>
-            <a href={socialLinks.instagram} target={"_blank"}>
+            <a href={INSTAGRAM_URL} target={"_blank"}>
               <FontAwesomeIcon
                 className="awesome"
                 icon={["fab", "instagram"]}
               />
             </a>
-            <a href={socialLinks.twitter} target={"_blank"}>
+            <a href={TWITTER_URL} target={"_blank"}>
               <FontAwesomeIcon className="awesome" icon={["fab", "twitter"]} />
             </a>
-            <a href={socialLinks.youtube} target={"_blank"}>
+            <a href={YOUTUBE_URL} target={"_blank"}>
               <FontAwesomeIcon className="awesome" icon={["fab", "youtube"]} />
             </a>
           </div>

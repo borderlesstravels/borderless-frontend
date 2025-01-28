@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Formik, FormikProps, FormikValues } from "formik";
-// import * as Yup from 'yup';
-import { sendRequest } from "../../../../services/utils/request";
 import { toast } from "react-toastify";
 import { regexConstants } from "../../../../services/constants/validation-regex";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { Path } from "../../../../navigations/routes";
 import "./login-form.scss";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../../../../services/actions-reducers/user-data";
-import axios from "axios";
-import { apiLinks } from "../../../../config/environment";
-import {
-  iStoreState,
-  IUserData,
-} from "../../../../services/constants/interfaces/store-schemas";
 import { useSelector } from "react-redux";
+import { handleLogin, selectUserMode } from "../../../../store/features/user";
+import {
+  useUserLoginMutation,
+  useUserResendVerificationOtpMutation,
+} from "../../../../store/apis/user-auth";
+import {
+  useHostLoginMutation,
+  useHostResendVerificationOtpMutation,
+} from "../../../../store/apis/host-auth";
 
 interface ILoginForm {
   poceedToVerify?: Function;
@@ -32,15 +29,19 @@ function LoginForm({
   switchToRegister,
   passwordReset,
 }: ILoginForm) {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [response, setResponse] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
-  const user: IUserData = useSelector((state: iStoreState) => state.user);
+  const currentUserMode = useSelector(selectUserMode);
   const [userMode, setUserMode] = useState<"user" | "host">(
-    user?.userMode || "user"
+    currentUserMode || "user"
   );
+
+  const [userLoginMutate] = useUserLoginMutation();
+  const [hostLoginMutate] = useHostLoginMutation();
+  const [userResendOtpMutate] = useUserResendVerificationOtpMutation();
+  const [hostResendOtpMutate] = useHostResendVerificationOtpMutation();
 
   const goToRegister = () => {
     if (switchToRegister) {
@@ -48,59 +49,61 @@ function LoginForm({
     }
   };
 
-  const submitRequest = (values: any, controls: any) => {
-    sendRequest(
-      {
-        url: `${userMode}-auth/login`,
-        method: "POST",
-        body: {
-          loginId: values.email,
-          password: values.password,
-        },
-        header: {
-          withCredentials: true,
-        },
-      },
-      (res: any, headers: any) => {
+  const submitRequest = async (values: any, controls: any) => {
+    try {
+      let res;
+      const payload = {
+        loginId: values.email,
+        password: values.password,
+      };
+
+      if (userMode === "user") {
+        res = await userLoginMutate(payload).unwrap();
+      } else {
+        res = await hostLoginMutate(payload).unwrap();
+      }
+
+      if (res) {
         toast.success(res.message);
         if (res.user) {
-          dispatch(userLogin({ ...res.user, userMode }));
+          dispatch(handleLogin({ mode: userMode, user: res.user }));
           if (logUserIn) {
             logUserIn();
           }
         }
         controls.setSubmitting(false);
-      },
-      (err: any) => {
-        toast.error(err?.error || err?.message || "Request Failed");
-        setResponse(err?.error || err?.message || "Request Failed");
-        if (err?.message === "Unverified email") {
-          if (poceedToVerify) {
-            dispatch(userLogin({ userId: err?.userId, userMode }));
-            sendRequest(
-              {
-                url: "user-auth/resend-verification-otp",
-                method: "POST",
-                body: {
-                  userId: err?.userId,
-                },
-              },
-              (res: any) => {
-                poceedToVerify();
-                controls.setSubmitting(false);
-              },
-              () => {
-                controls.setSubmitting(false);
-              }
-            );
+      }
+    } catch (error: any) {
+      toast.error(error?.error || error?.message || "Request Failed");
+      setResponse(error?.error || error?.message || "Request Failed");
+
+      if (error?.data?.message === "Unverified email") {
+        if (poceedToVerify) {
+          // dispatch(handleLogin({mode: userMode, user}))
+          // dispatch(userLogin({ userId: err?.userId, userMode }));
+
+          let res;
+          const payload = {
+            userId: error?.data?.userId,
+          };
+
+          if (userMode === "user") {
+            res = await userResendOtpMutate(payload).unwrap();
           } else {
+            res = await hostResendOtpMutate(payload).unwrap();
+          }
+
+          if (res) {
+            poceedToVerify(error?.data?.userId, userMode);
             controls.setSubmitting(false);
           }
         } else {
           controls.setSubmitting(false);
         }
+      } else {
+        controls.setSubmitting(false);
       }
-    );
+    }
   };
 
   const toggleShowPassword = () => {
@@ -134,14 +137,13 @@ function LoginForm({
 
   const requestPasswordReset = () => {
     if (passwordReset) {
-      passwordReset();
+      passwordReset(userMode);
     }
   };
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    dispatch(userLogin({ userMode }));
-  }, [userMode]);
+  }, []);
 
   return (
     <div className="dialogue-container">

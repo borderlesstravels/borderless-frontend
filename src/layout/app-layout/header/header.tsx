@@ -7,17 +7,18 @@ import SearchComponent from "./search-component/search-component";
 import { useNavigate } from "react-router-dom";
 import { Path } from "../../../navigations/routes";
 import { useSelector } from "react-redux";
-import { iStoreState } from "../../../services/constants/interfaces/store-schemas";
 import { useDispatch } from "react-redux";
-import { userLogout } from "../../../services/actions-reducers/user-data";
 import { sendRequest } from "../../../services/utils/request";
+import {
+  handleLogout,
+  selectUser,
+  selectUserMode,
+} from "../../../store/features/user";
 
 function Header(props: any) {
   const navigate = useNavigate();
-  const userDetails = useSelector((state: iStoreState) => state?.user || {});
-  const userType: "user" | "host" = useSelector(
-    (state: iStoreState) => state?.user?.userMode || "user"
-  );
+  const userDetails = useSelector(selectUser);
+  const userType = useSelector(selectUserMode);
   const dispatch = useDispatch();
 
   const navigateTo = (link: string) => {
@@ -32,11 +33,13 @@ function Header(props: any) {
         body: {},
       },
       () => {
-        dispatch(userLogout());
+        dispatch(handleLogout());
+        // dispatch(userLogout());
         navigateTo(`${Path.home}`);
       },
       () => {
-        dispatch(userLogout());
+        dispatch(handleLogout());
+        // dispatch(userLogout());
         navigateTo(`${Path.home}`);
       }
     );
@@ -67,7 +70,7 @@ function Header(props: any) {
           <div className="icon-holder center-info m-open-sm">
             <FontAwesomeIcon icon={"search"} className="m-open-sm" />
           </div>
-          {!userDetails.email ? (
+          {!userDetails?.email ? (
             <>
               <button
                 className="login"

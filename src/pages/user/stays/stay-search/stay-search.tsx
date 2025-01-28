@@ -7,7 +7,6 @@ import {
   PropertyRecentSearch3,
   PropertyRecentSearch4,
 } from "../../../../assets/images";
-import { resourceLinks } from "../../../../config/environment";
 import { Path } from "../../../../navigations/routes";
 import {
   formatNumber,
@@ -34,6 +33,7 @@ import {
   generateRatingStars,
 } from "./stay-search-service";
 import "./stay-search.scss";
+import { SHORTLET_IMAGES } from "../../../../constants/resourceLinks";
 
 function StaysPage(props: any) {
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ function StaysPage(props: any) {
             const newItem = { ...item };
             newItem.images = item.images
               .split(",")
-              .map((img: string) => resourceLinks.shortletImages + img);
+              .map((img: string) => SHORTLET_IMAGES + img);
             newItem.rating = 3;
             newItem.price = calculatePriceRaw(newItem);
             return newItem;

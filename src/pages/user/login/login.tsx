@@ -7,8 +7,8 @@ import "./login.scss";
 function LoginPage() {
   const navigate = useNavigate();
 
-  const poceedToVerify = () => {
-    navigate(`/${Path.verfyEmail}`);
+  const poceedToVerify = (id: string, mode: string) => {
+    navigate(`/${Path.verfyEmail}?id=${id}&mode=${mode}`);
   };
 
   const logUserIn = () => {
@@ -19,8 +19,8 @@ function LoginPage() {
     navigate(`/${Path.signup}`);
   };
 
-  const requestPasswordReset = () => {
-    navigate(`/${Path.requestPassword}`);
+  const requestPasswordReset = (mode: string) => {
+    navigate(`/${Path.requestPassword}?mode=${mode}`);
   };
 
   useEffect(() => {

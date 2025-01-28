@@ -8,7 +8,7 @@ function RetrievePasswordPage() {
   const navigate = useNavigate();
 
   const retrievalInitiated = () => {
-    navigate(`/${Path.updatePassword}`);
+    // navigate(`/${Path.updatePassword}`);
   };
 
   const goToLogin = () => {

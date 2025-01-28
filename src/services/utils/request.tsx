@@ -1,10 +1,10 @@
 import axios from "axios";
-import { apiLinks } from "../../config/environment";
 import {
   IPromiseRequestFormat,
   IrequestFormat,
 } from "../constants/interfaces/request-schema";
 import { Path } from "../../navigations/routes";
+import { API_BASE_URL } from "../../constants/apiLinks";
 
 export const sendRequest = (
   params: IrequestFormat,
@@ -13,7 +13,7 @@ export const sendRequest = (
 ) => {
   const request = params.external
     ? axios.create({})
-    : axios.create({ baseURL: apiLinks.url });
+    : axios.create({ baseURL: API_BASE_URL });
   request.interceptors.request.use((req: any) => {
     if (params.header) {
       req.headers = params.header;
@@ -69,7 +69,7 @@ export const sendPromiseRequest = (
 ): { request: Promise<any>; errorHandler: Function } => {
   const request = params.external
     ? axios.create({})
-    : axios.create({ baseURL: apiLinks.url });
+    : axios.create({ baseURL: API_BASE_URL });
   request.interceptors.request.use((req: any) => {
     if (params.header) {
       req.headers = params.header;

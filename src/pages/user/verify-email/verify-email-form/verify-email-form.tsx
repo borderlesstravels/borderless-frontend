@@ -1,44 +1,60 @@
-
 import React, { useEffect, useState } from "react";
 import { Formik, FormikProps, FormikValues } from "formik";
-import { sendRequest } from "../../../../services/utils/request";
 import { toast } from "react-toastify";
 import "./verify-email-form.scss";
-import { iStoreState, IUserData } from "../../../../services/constants/interfaces/store-schemas";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../../../../services/actions-reducers/user-data";
+import { handleLogin } from "../../../../store/features/user";
+import { Api } from "../../../../types";
+import { useSearchParams } from "react-router-dom";
+import { useUserVerifyEmailMutation } from "../../../../store/apis/user-auth";
+import { useHostVerifyEmailMutation } from "../../../../store/apis/host-auth";
 
-function VerifyEmailForm({userVerified}: {userVerified?: Function}) {
+function VerifyEmailForm({ userVerified }: { userVerified?: Function }) {
   const [response, setResponse] = useState<any>();
-  const user: IUserData = useSelector((state: iStoreState) => state.user);
+
+  const [searchParams] = useSearchParams();
+
+  const [userVerifyEmailMutate] = useUserVerifyEmailMutation();
+  const [hostVerifyEmailMutate] = useHostVerifyEmailMutation();
+
+  const userIdQuery = searchParams.get("id");
+  const userModeQuery = searchParams.get("mode");
+
   const dispatch = useDispatch();
 
-  const submitRequest = (values: any, controls: any) => {
-    sendRequest(
-      {
-        url: user?.userMode + "-auth/verify-email",
-        method: "POST",
-        body: {
-          otp: values.otp,
-          userId: user.userId,
-        },
-      },
-      (res: any) => {
+  const submitRequest = async (values: any, controls: any) => {
+    try {
+      let res;
+      const payload = {
+        otp: values.otp,
+        userId: userIdQuery || "",
+      };
+
+      if (userModeQuery === "user") {
+        res = await userVerifyEmailMutate(payload).unwrap();
+      } else {
+        res = await hostVerifyEmailMutate(payload).unwrap();
+      }
+
+      if (res) {
         sessionStorage.setItem("userInfo", JSON.stringify(res.user));
-        dispatch(userLogin({...res.user, userMode: user?.userMode}));
+        dispatch(
+          handleLogin({
+            mode: userModeQuery as Api.General.UserMode,
+            user: res.user,
+          })
+        );
         toast.success(res.message);
-        if(userVerified) {
+        if (userVerified) {
           userVerified(res.user);
         }
         controls.setSubmitting(false);
-      },
-      (err: any) => {
-        controls.setSubmitting(false);
-        toast.error(err?.error || err?.message || 'Request Failed');
-        setResponse(err?.error || err?.message || 'Request Failed');
       }
-    );
+    } catch (error: any) {
+      controls.setSubmitting(false);
+      toast.error(error?.error || error?.message || "Request Failed");
+      setResponse(error?.error || error?.message || "Request Failed");
+    }
   };
 
   const validate = (values: FormikValues) => {
@@ -57,16 +73,15 @@ function VerifyEmailForm({userVerified}: {userVerified?: Function}) {
 
   return (
     <div className="dialogue-container">
-      <h6>Verify {user.userMode === 'host' && <> Host </>} Email</h6>
+      <h6>Verify {userModeQuery === "host" && <> Host </>} Email</h6>
       <p className="brief">Enter the code sent to registered email address</p>
       <Formik
         initialValues={{
           otp: "",
         }}
         validate={(value) => validate(value)}
-        onSubmit={(values, controls) =>
-          submitRequest(values, controls)
-        }>
+        onSubmit={(values, controls) => submitRequest(values, controls)}
+      >
         {(
           props: FormikProps<{
             otp: string;
@@ -94,10 +109,8 @@ function VerifyEmailForm({userVerified}: {userVerified?: Function}) {
                     onBlur={handleBlur}
                     onFocus={() => (errors.otp = "")}
                     onChange={handleChange}
-                    onClick={() => setResponse('')}
-                    className={
-                      errors.otp && touched.otp ? "im-error" : ""
-                    }
+                    onClick={() => setResponse("")}
+                    className={errors.otp && touched.otp ? "im-error" : ""}
                   />
                   {errors.otp && touched.otp && (
                     <p className="reduced error-popup pt-1 mb-0">
@@ -110,10 +123,13 @@ function VerifyEmailForm({userVerified}: {userVerified?: Function}) {
                 <button
                   type="submit"
                   className="btn btn-con mx-0"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? "Processing.." : "Verify"}
                 </button>
-                {response && <div className="reduced error-popup">{response}</div>}
+                {response && (
+                  <div className="reduced error-popup">{response}</div>
+                )}
               </div>
             </form>
           );

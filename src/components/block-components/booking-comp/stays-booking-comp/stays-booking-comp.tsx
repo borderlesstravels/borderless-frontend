@@ -16,8 +16,8 @@ import {
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Path } from "../../../../navigations/routes";
-import { iStoreState } from "../../../../services/constants/interfaces/store-schemas";
 import { useSelector } from "react-redux";
+import { selectUserMode } from "../../../../store/features/user";
 
 interface IStayBooking {
   cleanSelection?: boolean;
@@ -42,9 +42,8 @@ function StayBookingComp({
   const [date, setDate] = useState<IDateData | undefined>(
     combinedStayData.date
   );
-  const userType: "user" | "host" = useSelector(
-    (state: iStoreState) => state?.user?.userMode
-  );
+
+  const userMode = useSelector(selectUserMode);
 
   const [canProceed, setCanProceed] = useState(true);
   const [errorListString, setErrorListString] = useState("");
@@ -129,7 +128,7 @@ function StayBookingComp({
           "stay-type-selector" + (hidecategories ? "" : " floated-type")
         }
       >
-        {userType === "host" && (
+        {userMode === "host" && (
           <button
             className="purple-button purple-shadow"
             onClick={listProperties}

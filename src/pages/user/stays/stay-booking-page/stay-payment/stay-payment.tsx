@@ -3,12 +3,12 @@ import { PaystackButton } from "react-paystack";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import MiniLoader from "../../../../../components/block-components/mini-loader/mini-loader";
-import { apiLinks } from "../../../../../config/environment";
 import { PaystackButtonProps } from "../../../../../services/constants/interfaces/utility-schemas";
 import { Path } from "../../../../../navigations/routes";
 import { sendRequest } from "../../../../../services/utils/request";
 import { IStayPaymentData } from "../stay-booking-service";
 import "./stay-payment.scss";
+import { PAYSTACK_PUBLIC_KEY } from "../../../../../constants/apiLinks";
 
 interface IStayProps {
   data: IStayPaymentData;
@@ -50,7 +50,7 @@ function StayPayment(props: IStayProps) {
   const [paystackProps, setPaystackProps] = useState<PaystackButtonProps>({
     email: props.data.email,
     amount: props.data.amount,
-    publicKey: apiLinks.paystackPublicKey,
+    publicKey: PAYSTACK_PUBLIC_KEY,
     text: "Pay Now",
     label: "Borderless Travels",
     metadata: {

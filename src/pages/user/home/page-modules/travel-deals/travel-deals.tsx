@@ -1,20 +1,48 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Carousel } from "../../../../../components/block-components/carousel";
 import { Path } from "../../../../../navigations/routes";
 import { formatNumber } from "../../../../../services/utils/data-manipulation-utilits";
-import { sendRequest } from "../../../../../services/utils/request";
 import {
   travelDealsData as dummyTravelDealsData,
   flightDummyImages,
 } from "./travel-deals-data";
 import "./travel-deals.scss";
+import { useGetFlightOfferSearchQuery } from "../../../../../store/apis/flights";
 
 function TravelDealsSect(props: any) {
   const navigate = useNavigate();
-  const [travelDealsData, setTravelDealsData] =
-    useState<any[]>(dummyTravelDealsData);
+
+  const { data: flightOfferData } = useGetFlightOfferSearchQuery({
+    origin: "LOS",
+    destination: "LAX",
+    departure_date: new Date().toISOString().split("T")[0],
+    adults: 1,
+    cabin: "economy",
+    children: 0,
+    infants: 0,
+    return_date: "",
+  });
+
+  const travelDealsData = useMemo(() => {
+    if (!flightOfferData) return dummyTravelDealsData;
+
+    const data = flightOfferData?.data || [];
+    const mappedData = data.map((item, index) => ({
+      location:
+        item?.outbound[item?.outbound.length - 1].airport_from_details?.city,
+      country:
+        item?.outbound[item?.outbound.length - 1].airport_from_details?.country,
+      rating: 4.8,
+      oldPrice: 850,
+      currentPrice: item.amount,
+      image: flightDummyImages[index % 4],
+      id: item.id,
+    }));
+
+    return mappedData;
+  }, [flightOfferData]);
 
   const previewCount = () => {
     const width = window.innerWidth;
@@ -27,45 +55,6 @@ function TravelDealsSect(props: any) {
     } else {
       return 1;
     }
-  };
-
-  const getTrendingFlights = () => {
-    sendRequest(
-      {
-        url: "flight/flight-offer-search",
-        method: "POST",
-        body: {
-          origin: "LOS",
-          destination: "LAX",
-          departure_date: new Date().toISOString().split("T")[0],
-          adults: "1",
-          cabin: "economy",
-          children: "0",
-          infants: "0",
-          return_date: "",
-        },
-      },
-      (res: any) => {
-        const flights = res.data.map((flight: any, index: number) => {
-          return {
-            location:
-              flight?.outbound[flight?.outbound.length - 1]
-                ?.airport_from_details?.city,
-            country:
-              flight?.outbound[flight?.outbound.length - 1]
-                ?.airport_from_details?.country,
-            rating: 4.8,
-            oldPrice: 850,
-            currentPrice: flight.amount,
-            image: flightDummyImages[index % 4],
-            // image: flight?.outbound[flight?.outbound.length - 1]?.airline_details?.logo,
-            id: flight.id,
-          };
-        });
-        setTravelDealsData(flights);
-      },
-      (err: any) => {}
-    );
   };
 
   const travelDealsCarousel = travelDealsData.map((data, index) => {
@@ -119,22 +108,18 @@ function TravelDealsSect(props: any) {
     );
   });
 
-  const viewFlightDetails = (id: number) => {
+  const viewFlightDetails = (id: string) => {
     if (id) {
       navigate(`/${Path.flightPreview}/${id}`);
     }
   };
-
-  useEffect(() => {
-    getTrendingFlights();
-  }, [props]);
 
   return (
     <div className="travel-deals">
       <div className="bg-fade"></div>
       <div>
         <h3 className="text-center h3b">
-          Today’s <span className="orange-tx"> Travel deals</span>
+          Today's <span className="orange-tx"> Travel deals</span>
         </h3>
         <div className="holder-1100">
           <Carousel

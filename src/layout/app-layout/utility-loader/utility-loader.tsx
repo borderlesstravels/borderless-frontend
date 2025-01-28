@@ -1,32 +1,12 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import {
-  getAirport,
-  setAirport,
-} from "../../../services/actions-reducers/airport-list";
-import {
-  getShortlet,
-  setShortlet,
-} from "../../../services/actions-reducers/shortlet-data";
-import { userLogin } from "../../../services/actions-reducers/user-data";
+import React from "react";
+import { useFetchAirportsQuery } from "../../../store/apis/flights";
+import { useFetchShortletsLocationsQuery } from "../../../store/apis/shortlets";
 
 function UtilityDatALoader(props: any) {
-  const dispatch = useDispatch();
+  const { data: airportData } = useFetchAirportsQuery();
+  const { data: shortletsData } = useFetchShortletsLocationsQuery();
 
-  useEffect(() => {
-    dispatch(getAirport());
-    dispatch(getShortlet());
-    // setTimeout(() => dispatch(setAirport([{name: 'agric'}, {name: 'industry'}])), 6000)
-    // setTimeout(() => {
-    //   dispatch(userLogin({
-    //     email: "dapo@gmail2.com",
-    //     email_verified: true,
-    //     first_name: "Dapo",
-    //     id: "660c7198416cb352ca010e40",
-    //     last_name: "Ogunlana",
-    //   }))
-    // }, 3000000);
-  }, [props]);
+  console.log({ airportData, shortletsData });
 
   return <></>;
 }

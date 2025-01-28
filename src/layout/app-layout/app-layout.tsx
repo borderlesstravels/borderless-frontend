@@ -37,7 +37,7 @@ function UserModule() {
             <Outlet />
           </div>
           <Footer />
-          <UtilityDatALoader />
+          {/* <UtilityDatALoader /> */}
         </div>
       </div>
     </div>

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Formik, FormikHelpers, FormikValues } from "formik";
-import * as Yup from "yup";
+import { Formik, FormikHelpers } from "formik";
 import { toast } from "react-toastify";
 import MiniLoader from "../../../../components/block-components/mini-loader/mini-loader";
-import { apiLinks } from "../../../../config/environment";
 import {
   activateAllTouchFields,
   chooseRelationship,
@@ -13,7 +11,6 @@ import {
   IFlightPaymentData,
   initialContactPayload,
   initialContactTouchedData,
-  initialFlightBookingPayload,
   initialPassengerPayload,
   initialPassengerTouchedData,
   IPassengerPayload,
@@ -23,7 +20,6 @@ import {
 } from "./flight-booking-service";
 import FlightPayment from "./flight-payment/flight-payment";
 import "./flight-booking-page.scss";
-import { sendRequest } from "../../../../services/utils/request";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   getFlightToAndFrom,
@@ -41,19 +37,20 @@ import {
   iStoreState,
   IUserData,
 } from "../../../../services/constants/interfaces/store-schemas";
+import {
+  useBookFlightAuthenticatedMutation,
+  useBookFlightUnauthenticatedMutation,
+  useGetConfirmFlightPriceQuery,
+} from "../../../../store/apis/flights";
+import { Api } from "../../../../types";
 
 function FlightBookingPage(props: any) {
   const navigate = useNavigate();
   const user: IUserData = useSelector((state: iStoreState) => state.user);
   const [openPayment, setOpenPayment] = useState(false);
   const flightId = useParams().id || "";
-  const [loading, setLoading] = useState(0);
-  const [flightDetails, setFlightDetails] = useState<any>({ outbound: [] });
   const [flightPaymentData, setFlightPaymentData] =
     useState<IFlightPaymentData>(flightPaymentInitialData);
-  const [bookingData, setBookingData] = useState<IFlightBookingPayload>(
-    initialFlightBookingPayload
-  );
   const [bookingErrors, setBookingErrors] = useState<IFlightBookingPayload>({
     contact_details: initialContactPayload,
     passenger_details: [],
@@ -64,43 +61,24 @@ function FlightBookingPage(props: any) {
       passenger_details: [],
     });
 
-  const getFlightDetails = () => {
-    setLoading(0);
+  const [bookUnauthenticatedMutate] = useBookFlightUnauthenticatedMutation();
+  const [bookAuthenticatedMutate] = useBookFlightAuthenticatedMutation();
+  const {
+    data: flightPriceData,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetConfirmFlightPriceQuery({
+    id: flightId,
+  });
+  const flightDetails = flightPriceData?.data;
 
-    sendRequest(
-      {
-        url: "flight/confirm-price/" + flightId,
-        method: "GET",
-      },
-      (res: any) => {
-        setFlightDetails(res.data);
-        setupTouchedAndErrors(res.data);
-        getPassengers(res.data?.price_summary || []);
-        // if(user?.email) {
-        //   setLoading(1);
-        // } else {
-        //   setLoading(3);
-        // }
-        setLoading(1);
-      },
-      (err: any) => {
-        setLoading(2);
-      }
-    );
-  };
-
-  const getPassengers = (data: any[]) => {
-    const passengerList = [];
-    data.map((item) => {
-      for (let i = 0; i > item.quantity; i++) {
-        passengerList.push({ item: item.passenger_type });
-      }
-    });
-  };
-
-  const reloadData = () => {
-    getFlightDetails();
-  };
+  useEffect(() => {
+    if (flightDetails) {
+      setupTouchedAndErrors(flightDetails);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flightDetails]);
 
   const exitPage = () => {
     navigate(`/${Path.flights}`);
@@ -111,7 +89,7 @@ function FlightBookingPage(props: any) {
     // validateForErrors(formValues);
     const { bookingErr, errors } = validateForErrors(
       values,
-      flightDetails.document_required,
+      flightDetails?.document_required as any,
       flightDetails
     );
     setBookingErrors(bookingErr);
@@ -120,7 +98,7 @@ function FlightBookingPage(props: any) {
 
   const setupPassenterDetails = () => {
     const passengerList: any[] = [];
-    flightDetails.price_summary.map((item: any) => {
+    flightDetails?.price_summary.forEach((item: any) => {
       for (let i = 0; i < item.quantity; i++) {
         passengerList.push({ type: item.passenger_type });
       }
@@ -137,7 +115,7 @@ function FlightBookingPage(props: any) {
   const setupTouchedAndErrors = (details: any) => {
     const errorData = bookingErrors;
     const touchedData = bookingTouched;
-    processPassengerPriceList(details.travelers_price)?.map(() => {
+    processPassengerPriceList(details.travelers_price)?.forEach(() => {
       errorData.passenger_details.push(initialPassengerPayload);
       touchedData.passenger_details.push(initialPassengerTouchedData);
     });
@@ -175,44 +153,77 @@ function FlightBookingPage(props: any) {
     setBookingTouched(touched);
   };
 
-  const sumbitFlightBooking = (
+  const sumbitFlightBooking = async (
     values: IFlightBookingPayload,
     control: FormikHelpers<any>
   ) => {
-    const payload = updateBookingData(values, flightDetails.document_required);
-    setBookingData(payload);
-    const bookLink = user.email
-      ? "flight/book-flight-auth/"
-      : "flight/book-flight-no-auth/";
-    sendRequest(
-      {
-        url: bookLink + flightId,
-        method: "POST",
-        body: payload,
-      },
-      (res: any) => {
+    try {
+      const payload = updateBookingData(
+        values,
+        !!flightDetails?.document_required
+      );
+
+      let res: Api.Flights.BookFlight.Response | undefined;
+
+      if (user.email) {
+        res = await bookAuthenticatedMutate({
+          body: payload,
+          query: { id: flightId },
+        }).unwrap();
+      } else {
+        res = await bookUnauthenticatedMutate({
+          body: payload,
+          query: { id: flightId },
+        }).unwrap();
+      }
+
+      if (res) {
         toast.success(
           "Your flight data has been captured, please make payment to complete booking"
         );
         setFlightPaymentData({
           email: values.contact_details.c_email,
-          amount: flightDetails.amount * 100,
+          amount: Number(flightDetails?.amount) * 100,
           booking_reference: res.data?.reference,
         });
         setOpenPayment(true);
         control.setSubmitting(false);
         window.scrollTo({ behavior: "auto", left: 0, top: 0 });
-      },
-      (err: any) => {
-        toast.error(err.error || "Request failed");
-        control.setSubmitting(false);
       }
-    );
+
+      // sendRequest(
+      //   {
+      //     url: bookLink + flightId,
+      //     method: "POST",
+      //     body: payload,
+      //   },
+      //   (res: any) => {
+      //     toast.success(
+      //       "Your flight data has been captured, please make payment to complete booking"
+      //     );
+      //     setFlightPaymentData({
+      //       email: values.contact_details.c_email,
+      //       amount: Number(flightDetails?.amount) * 100,
+      //       booking_reference: res.data?.reference,
+      //     });
+      //     setOpenPayment(true);
+      //     control.setSubmitting(false);
+      //     window.scrollTo({ behavior: "auto", left: 0, top: 0 });
+      //   },
+      //   (err: any) => {
+      //     toast.error(err.error || "Request failed");
+      //     control.setSubmitting(false);
+      //   }
+      // );
+    } catch (error: any) {
+      toast.error(error.error || "Request failed");
+      control.setSubmitting(false);
+    }
   };
+
   useEffect(() => {
-    getFlightDetails();
     window.scrollTo({ behavior: "auto", left: 0, top: 0 });
-  }, [props]);
+  }, []);
 
   // useEffect(() => {
   //   if(loading === 3) {
@@ -220,21 +231,20 @@ function FlightBookingPage(props: any) {
   //   }
   // }, [user])
 
+  console.log({ isLoading });
+
   return (
     <>
-      {loading === 0 && (
+      {isLoading && (
         <div className="loader-holder">
           <MiniLoader />
         </div>
       )}
-      {loading === 2 && (
+      {isError && (
         <div className="loader-holder">
           <div className="error-box">
             <h3>An error occured while loading</h3>
-            <button
-              className="my-2 mx-2 confirmation-button"
-              onClick={reloadData}
-            >
+            <button className="my-2 mx-2 confirmation-button" onClick={refetch}>
               Reload
             </button>
             <button className="my-2 mx-2 cancel" onClick={exitPage}>
@@ -243,7 +253,7 @@ function FlightBookingPage(props: any) {
           </div>
         </div>
       )}
-      {loading === 1 && (
+      {!isLoading && flightDetails && (
         <div className="flight-booking-page">
           <Formik
             initialValues={{

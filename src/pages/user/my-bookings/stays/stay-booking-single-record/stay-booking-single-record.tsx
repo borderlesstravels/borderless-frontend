@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import AppModal from "../../../../../components/block-components/app-modal/app-modal";
 import MiniLoader from "../../../../../components/block-components/mini-loader/mini-loader";
-import { resourceLinks } from "../../../../../config/environment";
 import { iStoreState } from "../../../../../services/constants/interfaces/store-schemas";
 import { Path } from "../../../../../navigations/routes";
 import { formatDate } from "../../../../../services/utils/data-manipulation-utilits";
@@ -20,6 +19,8 @@ import {
 } from "../../../../host/add-stay/add-shortlet/add-shortlet-data";
 import { formatTime } from "../../../stays/stay-search/stay-search-service";
 import "./stay-booking-single-record.scss";
+import { SHORTLET_IMAGES } from "../../../../../constants/resourceLinks";
+import { selectUserMode } from "../../../../../store/features/user";
 
 function StayBookingSingleRecord(props: any) {
   const stayId = useParams().id || "";
@@ -27,9 +28,7 @@ function StayBookingSingleRecord(props: any) {
   const [processingOrder, setProcessingOrder] = useState<0 | 1 | 2 | 3 | 4>(0);
   const [stayDetails, setStayDetails] = useState<iBookedAppartmentInfo>();
   const navigate = useNavigate();
-  const userType: "user" | "host" = useSelector(
-    (state: iStoreState) => state?.user?.userMode || "user"
-  );
+  const userType = useSelector(selectUserMode);
   const [showEditModal, setShowEditModal] = useState(false);
   const [reviewInfo, setReviewInfo] = useState("");
   const [reviewStar, setReviewStar] = useState(0);
@@ -49,7 +48,7 @@ function StayBookingSingleRecord(props: any) {
         const refinedData = res.data;
         refinedData.images = res.data.apartment_img
           .split(", ")
-          .map((image: string) => resourceLinks.shortletImages + image);
+          .map((image: string) => SHORTLET_IMAGES + image);
         setStayDetails(refinedData);
         console.log({ refinedData });
         setLoading(1);
@@ -406,8 +405,7 @@ function StayBookingSingleRecord(props: any) {
                     <img
                       src={
                         stayDetails?.apartment_img
-                          ? resourceLinks.shortletImages +
-                            stayDetails?.apartment_img
+                          ? SHORTLET_IMAGES + stayDetails?.apartment_img
                           : ""
                       }
                       alt=""

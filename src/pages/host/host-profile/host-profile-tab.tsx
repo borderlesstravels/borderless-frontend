@@ -18,13 +18,16 @@ import { sendRequest } from "../../../services/utils/request";
 import { toast } from "react-toastify";
 import { AvatarIcon } from "../../../assets/images";
 import AppModal from "../../../components/block-components/app-modal/app-modal";
-import { resourceLinks } from "../../../config/environment";
 import { useDispatch } from "react-redux";
-import {
-  userLogin,
-  userLogout,
-} from "../../../services/actions-reducers/user-data";
 import { useSearchParams } from "react-router-dom";
+import { HOST_AVATAR_IMAGES } from "../../../constants/resourceLinks";
+import {
+  handleLogin,
+  handleLogout,
+  selectUser,
+  selectUserMode,
+} from "../../../store/features/user";
+import { Api } from "../../../types";
 
 function HostProfilePage(props: any) {
   const navigate = useNavigate();
@@ -33,7 +36,8 @@ function HostProfilePage(props: any) {
   const [activeTab, setActiveTab] = useState<
     "profile" | "reviews" | "properties" | "bookings" | string
   >(params.tab || "profile");
-  const user: IUserData = useSelector((state: iStoreState) => state?.user);
+  const user = useSelector(selectUser);
+  const userMode = useSelector(selectUserMode);
   const dispatch = useDispatch();
   const [notifications, setNotifications] = useState<any[]>([]);
   const [uploadImage, setUploadImage] = useState();
@@ -54,7 +58,7 @@ function HostProfilePage(props: any) {
       {
         url: "host-profile/notifications",
         method: "GET",
-        catchAuthError: () => dispatch(userLogout()),
+        catchAuthError: () => dispatch(handleLogout()),
       },
       (res: any) => {
         setNotifications(res.data || []);
@@ -108,14 +112,16 @@ function HostProfilePage(props: any) {
   const getUser = () => {
     sendRequest(
       {
-        url:
-          user.userMode === "user"
-            ? "user-profile/user"
-            : "host-profile/profile",
+        url: userMode === "user" ? "user-profile/user" : "host-profile/profile",
         method: "GET",
       },
       (res: any) => {
-        dispatch(userLogin({ ...res.data, userMode: user.userMode }));
+        dispatch(
+          handleLogin({
+            mode: userMode as Api.General.UserMode,
+            user: res.user,
+          })
+        );
       },
       (err: any) => {}
     );
@@ -141,8 +147,8 @@ function HostProfilePage(props: any) {
                 <div className="profile-image">
                   <img
                     src={
-                      user.avatar
-                        ? resourceLinks.hostAvatarImages + user.avatar
+                      user?.avatar
+                        ? HOST_AVATAR_IMAGES + user.avatar
                         : AvatarIcon
                     }
                     alt=""
@@ -159,7 +165,7 @@ function HostProfilePage(props: any) {
                 </div>
                 <div>
                   <h5 className="f700 mb-2">
-                    {user.first_name} {user.last_name}
+                    {user?.first_name} {user?.last_name}
                   </h5>
                   <div className="spread-info-front">
                     <FontAwesomeIcon icon={"star"} className="mr-2 reduced" />

@@ -5,20 +5,21 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { iStoreState } from "../../services/constants/interfaces/store-schemas";
 import { sendRequest } from "../../services/utils/request";
+import { userLogout } from "../../services/actions-reducers/user-data";
 import {
-  userLogin,
-  userLogout,
-} from "../../services/actions-reducers/user-data";
+  handleLogin,
+  handleLogout,
+  selectUser,
+  selectUserMode,
+} from "../../store/features/user";
+import { Api } from "../../types";
 
 const ProtectedLayout = () => {
   // const token = sessionStorage.getItem('token');
   const dispatch = useDispatch();
-  const verified = useSelector(
-    (state: iStoreState) => state?.user?.email_verified
-  );
-  const userType: "user" | "host" = useSelector(
-    (state: iStoreState) => state?.user?.userMode || "user"
-  );
+  const user = useSelector(selectUser);
+  const verified = user?.email_verified;
+  const userType = useSelector(selectUserMode);
   const [overlayMode, setOverlayMode] = useState<0 | 1 | 2>(2);
   const [initialized, setInitialized] = useState(false);
 
@@ -33,12 +34,18 @@ const ProtectedLayout = () => {
         method: "GET",
       },
       (res: any) => {
-        dispatch(userLogin({ ...res.data, userMode: userType }));
+        dispatch(
+          handleLogin({
+            mode: userType as Api.General.UserMode,
+            user: res.data,
+          })
+        );
       },
       (err: any) => {
         //   toast.error(err?.error || err?.message || 'Request Failed');
         if (err?.error === "No cookie found") {
-          dispatch(userLogout());
+          dispatch(handleLogout());
+          // dispatch(userLogout());
         }
       }
     );

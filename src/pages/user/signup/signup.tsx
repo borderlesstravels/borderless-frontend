@@ -7,8 +7,8 @@ import "./signup.scss";
 function SignupPage() {
   const navigate = useNavigate();
 
-  const poceedToVerify = () => {
-    navigate(`/${Path.verfyEmail}`);
+  const poceedToVerify = (id: string, mode: string) => {
+    navigate(`/${Path.verfyEmail}?id=${id}&mode=${mode}`);
   };
 
   const goToLogin = () => {

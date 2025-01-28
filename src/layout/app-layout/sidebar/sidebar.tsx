@@ -1,20 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { LogoWhite } from "../../../assets/images";
 import { iStoreState } from "../../../services/constants/interfaces/store-schemas";
 import { Path } from "../../../navigations/routes";
 import SubHeaderMenu from "../sub-header/sub-header-menu/sub-header-menu";
 
 import "./sidebar.scss";
+import { selectUser, selectUserMode } from "../../../store/features/user";
 
 function Sidebar(props: any) {
-  const userDetails = useSelector((state: iStoreState) => state?.user || {});
-  const userType: "user" | "host" = useSelector(
-    (state: iStoreState) => state?.user?.userMode || "user"
-  );
+  const userDetails = useSelector(selectUser);
+  const userMode = useSelector(selectUserMode);
 
   useEffect(() => {}, [props]);
 
@@ -61,7 +59,7 @@ function Sidebar(props: any) {
           </div>
         </div>
 
-        {userDetails.email_verified && (
+        {userDetails?.email_verified && (
           <>
             <div className="sect">
               <NavLink
@@ -370,7 +368,7 @@ function Sidebar(props: any) {
 
         <hr className="separation-line" />
 
-        {userDetails.email_verified && userDetails.userMode === "user" && (
+        {userDetails?.email_verified && userMode === "user" && (
           <>
             <div className="sect">
               <NavLink

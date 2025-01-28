@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import Loader from "../loader/loader";
+import MiniLoader from "../mini-loader/mini-loader";
 
 interface Props {
   component: JSX.Element;
@@ -8,7 +8,14 @@ interface Props {
 
 const SuspenseFallback = ({ component, path }: Props) => {
   return (
-    <Suspense fallback={<Loader />} key={path}>
+    <Suspense
+      fallback={
+        <div className="loader-holder">
+          <MiniLoader />
+        </div>
+      }
+      key={path}
+    >
       {component}
     </Suspense>
   );

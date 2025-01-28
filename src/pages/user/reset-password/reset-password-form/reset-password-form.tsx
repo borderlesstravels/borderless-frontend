@@ -1,52 +1,71 @@
-
 import React, { useEffect, useState } from "react";
 import { Formik, FormikProps, FormikValues } from "formik";
-// import * as Yup from 'yup';
-import { sendRequest } from "../../../../services/utils/request";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./reset-password-form.scss";
-import { iStoreState, IUserData } from "../../../../services/constants/interfaces/store-schemas";
 import { useSelector } from "react-redux";
+import { selectUserMode } from "../../../../store/features/user";
+import { useSearchParams } from "react-router-dom";
+import { useUserResetPasswordMutation } from "../../../../store/apis/user-auth";
+import { useHostResetPasswordMutation } from "../../../../store/apis/host-auth";
 
-function ResetPasswordForm({resetComplete, switchToLogin}: {resetComplete?: Function, switchToLogin?: Function}) {
+function ResetPasswordForm({
+  resetComplete,
+  switchToLogin,
+}: {
+  resetComplete?: Function;
+  switchToLogin?: Function;
+}) {
   const [response, setResponse] = useState<any>();
   const [showPassword, setShowPassword] = useState(false);
-  const user: IUserData = useSelector((state: iStoreState) => state.user);
-  const token = new URLSearchParams(document.location.search).get('token');
-  const id = new URLSearchParams(document.location.search).get('id');
-  const userType = new URLSearchParams(document.location.search).get('type') || user?.userMode;
+  const userMode = useSelector(selectUserMode);
+
+  const [searchParams] = useSearchParams();
+
+  const [userResetPwdMutate] = useUserResetPasswordMutation();
+  const [hostResetPwdMutate] = useHostResetPasswordMutation();
+
+  const token = searchParams.get("token");
+  const id = searchParams.get("id");
+  const userType = searchParams.get("type") || "user";
 
   const goToLogin = () => {
-    if(switchToLogin){
+    if (switchToLogin) {
       switchToLogin();
     }
-  }
+  };
 
-  const submitRequest = (values: any, controls: any) => {
-    sendRequest(
-      {
-        url: `${userType || 'user'}-auth/reset-password?token=${token}&id=${id}`,
-        method: "POST",
+  const submitRequest = async (values: any, controls: any) => {
+    try {
+      let res;
+      const payload = {
         body: {
           password: values.password,
-          // otp: values.otp,
-          // userId: sessionStorage.getItem("userId"),
         },
-      },
-      (res: any) => {
+        params: {
+          id: id || "",
+          token: token || "",
+        },
+      };
+
+      if (userType === "user") {
+        res = await userResetPwdMutate(payload).unwrap();
+      } else {
+        res = await hostResetPwdMutate(payload).unwrap();
+      }
+
+      if (res) {
         toast.success(res.message);
-        if(resetComplete) {
+        if (resetComplete) {
           resetComplete();
         }
         controls.setSubmitting(false);
-      },
-      (err: any) => {
-        controls.setSubmitting(false);
-        toast.error(err?.error || err?.message || 'Request Failed');
-        setResponse(err?.error || err?.message || 'Request Failed');
       }
-    );
+    } catch (error: any) {
+      controls.setSubmitting(false);
+      toast.error(error?.error || error?.data?.message || "Request Failed");
+      setResponse(error?.error || error?.data?.message || "Request Failed");
+    }
   };
 
   const toggleShowPassword = () => {
@@ -73,7 +92,7 @@ function ResetPasswordForm({resetComplete, switchToLogin}: {resetComplete?: Func
 
   return (
     <div className="dialogue-container">
-      <h6>Reset {user.userMode === 'host' && <> Host </>} Password</h6>
+      <h6>Reset {userMode === "host" && <> Host </>} Password</h6>
       <p className="brief"></p>
       <Formik
         initialValues={{
@@ -81,9 +100,8 @@ function ResetPasswordForm({resetComplete, switchToLogin}: {resetComplete?: Func
           confirm_password: "",
         }}
         validate={(value) => validate(value)}
-        onSubmit={(values, controls) =>
-          submitRequest(values, controls)
-        }>
+        onSubmit={(values, controls) => submitRequest(values, controls)}
+      >
         {(
           props: FormikProps<{
             password: string;
@@ -110,18 +128,24 @@ function ResetPasswordForm({resetComplete, switchToLogin}: {resetComplete?: Func
                     id="password"
                     value={values.password}
                     onBlur={handleBlur}
-                    onFocus={() => setResponse('')}
+                    onFocus={() => setResponse("")}
                     onChange={handleChange}
                     className={
                       errors.password && touched.password ? "im-error" : ""
                     }
                   />
                   <div className="password-shower">
-                    {
-                      showPassword ?
-                      <FontAwesomeIcon icon={'eye-slash'} onClick={toggleShowPassword}/> :
-                      <FontAwesomeIcon icon={'eye'} onClick={toggleShowPassword}/>
-                    }
+                    {showPassword ? (
+                      <FontAwesomeIcon
+                        icon={"eye-slash"}
+                        onClick={toggleShowPassword}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={"eye"}
+                        onClick={toggleShowPassword}
+                      />
+                    )}
                   </div>
                   {errors.password && touched.password && (
                     <p className="reduced error-popup pt-1 mb-0">
@@ -139,18 +163,26 @@ function ResetPasswordForm({resetComplete, switchToLogin}: {resetComplete?: Func
                     id="confirm_password"
                     value={values.confirm_password}
                     onBlur={handleBlur}
-                    onFocus={() => setResponse('')}
+                    onFocus={() => setResponse("")}
                     onChange={handleChange}
                     className={
-                      errors.confirm_password && touched.confirm_password ? "im-error" : ""
+                      errors.confirm_password && touched.confirm_password
+                        ? "im-error"
+                        : ""
                     }
                   />
                   <div className="password-shower">
-                    {
-                      showPassword ?
-                      <FontAwesomeIcon icon={'eye-slash'} onClick={toggleShowPassword}/> :
-                      <FontAwesomeIcon icon={'eye'} onClick={toggleShowPassword}/>
-                    }
+                    {showPassword ? (
+                      <FontAwesomeIcon
+                        icon={"eye-slash"}
+                        onClick={toggleShowPassword}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={"eye"}
+                        onClick={toggleShowPassword}
+                      />
+                    )}
                   </div>
                   {errors.confirm_password && touched.confirm_password && (
                     <p className="reduced error-popup pt-1 mb-0">
@@ -163,10 +195,13 @@ function ResetPasswordForm({resetComplete, switchToLogin}: {resetComplete?: Func
                 <button
                   type="submit"
                   className="btn btn-con mx-0"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? "Processing.." : "Reset Password"}
                 </button>
-                {response && <div className="reduced error-popup">{response}</div>}
+                {response && (
+                  <div className="reduced error-popup">{response}</div>
+                )}
               </div>
             </form>
           );
@@ -174,10 +209,10 @@ function ResetPasswordForm({resetComplete, switchToLogin}: {resetComplete?: Func
       </Formik>
       <div className="row pt-3 pb-2">
         <div className="col-md-12 py-2">
-            <p className="mb-0 alternate-action">
-              Return to
-              <span onClick={goToLogin}> Login</span>
-            </p>
+          <p className="mb-0 alternate-action">
+            Return to
+            <span onClick={goToLogin}> Login</span>
+          </p>
         </div>
       </div>
     </div>

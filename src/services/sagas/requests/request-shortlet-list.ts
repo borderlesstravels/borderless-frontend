@@ -1,6 +1,9 @@
 import axios from "axios";
-import { apiLinks } from "../../../config/environment";
+import { API_BASE_URL } from "../../../constants/apiLinks";
 
-export function getShortletList () {
-    return axios.request({url: `${apiLinks.url}shortlet/fetch-shortlets-location`, method: 'get'});
+export function getShortletList() {
+  return axios.request({
+    url: `${API_BASE_URL}shortlet/fetch-shortlets-location`,
+    method: "get",
+  });
 }
