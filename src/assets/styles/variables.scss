@@ -4,22 +4,22 @@ $primary-blue: #040876;
 $primary-blue-hover: #01033d;
 $primary-blue-active: #000320;
 
-$secondary-blue: #0079BF;
+$secondary-blue: #0079bf;
 $secondary-blue-hover: #004faa;
 
-$faint-blue-bg: #F5F3FF;
+$faint-blue-bg: #f5f3ff;
 $faint-blue-border: rgba(104, 48, 195, 0.3);
 $purple-bg: #660476;
 $purple-bg-hover: #450050;
 
-$primary-bg: #F6F9FF;
+$primary-bg: #f6f9ff;
 $primary-bg-hover: #cad9f5;
 
-$yellow-bright: #FFB60A;
-$yellow: #DD9A00;
+$yellow-bright: #ffb60a;
+$yellow: #dd9a00;
 $yellow-dark: #9c6d00;
 $yellow-faint: rgba(221, 155, 0, 0.4);
-$orange: #ED6300;
+$orange: #ed6300;
 $orange-hover: #c05000;
 $orange-active: #8d3b00;
 $red: #ff0101;
@@ -45,7 +45,7 @@ $grey-lightest: #eff0f2;
 $grey-light: #cccccc;
 $grey-mid: #818181;
 $grey-dark: #4f5873;
-$off-black: #4E4E4E;
+$off-black: #4e4e4e;
 
 $faint-font: rgba(34, 33, 91, 0.6);
 
@@ -62,11 +62,14 @@ $transparent: rgba(0, 0, 0, 0);
   @media all and (min-width: $value) {
     @content;
   }
-} ;
+}
 
-
-
-@mixin base-button ($bg, $hover-bg, $bg-shadow: rgba(0, 0, 0, 0), $hover-bg-shadow: rgba(0, 0, 0, 0)) {
+@mixin base-button(
+  $bg,
+  $hover-bg,
+  $bg-shadow: rgba(0, 0, 0, 0),
+  $hover-bg-shadow: rgba(0, 0, 0, 0)
+) {
   background-color: $bg;
   color: $white;
   border: none;
@@ -74,28 +77,33 @@ $transparent: rgba(0, 0, 0, 0);
   border-radius: 6px;
   padding: 6px 9px;
   box-shadow: 0 1px 10px 0 $bg-shadow;
-  &:hover{
-      background-color: $hover-bg;
-      box-shadow: 0 1px 12px 0 $bg-shadow;
+  &:hover {
+    background-color: $hover-bg;
+    box-shadow: 0 1px 12px 0 $bg-shadow;
   }
-  &:active{
-      transform: scale(1.03) translateY(5px);
+  &:active {
+    transform: scale(1.03) translateY(5px);
   }
 }
 
-@mixin base-hollow-button ($bg, $hover-bg, $bg-shadow: rgba(0, 0, 0, 0), $hover-bg-shadow: rgba(0, 0, 0, 0)) {
+@mixin base-hollow-button(
+  $bg,
+  $hover-bg,
+  $bg-shadow: rgba(0, 0, 0, 0),
+  $hover-bg-shadow: rgba(0, 0, 0, 0)
+) {
   background-color: $white-faint5;
   color: $bg;
   border: 1px solid $bg;
   transition: 0.3s ease;
   border-radius: 6px;
   padding: 6px 9px;
-  &:hover{
+  &:hover {
     color: $white;
     background-color: $hover-bg;
     box-shadow: 0 1px 10px 0 $bg-shadow;
   }
-  &:active{
+  &:active {
     background-color: $hover-bg;
     border-color: $hover-bg;
     box-shadow: 0 1px 12px 0 $bg-shadow;

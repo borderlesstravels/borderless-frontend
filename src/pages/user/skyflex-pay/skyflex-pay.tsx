@@ -2,13 +2,11 @@ import React, { useEffect } from "react";
 import {
   SkyflexBannerDecore,
   SkyflexBannerTraveller,
-  SkyflexBggPlane,
   SkyflexDreamTripBigImg,
   SkyflexDreamTripImg1,
   SkyflexDreamTripImg2,
   SkyflexDreamTripImg3,
   SkyflexDreamTripImg4,
-  SkyflexHolidayBand,
   SkyflexHowItWorks,
   SkyflexWhatIs,
   SkyflexWhyChoose,

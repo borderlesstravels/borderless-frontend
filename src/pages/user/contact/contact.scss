@@ -1,165 +1,166 @@
 @import "../../../assets/styles/variables.scss";
 
-
-.contact{
-    background-color: #F7F5F7;
-    width: 100%;
-    h3{
-        span{
-            font-size: 1em;
-        }
+.contact {
+  background-color: #f7f5f7;
+  width: 100%;
+  h3 {
+    span {
+      font-size: 1em;
     }
-    .contact-grid{
-        width: 90%;
-        max-width: 1100px;
-        margin: 2em auto 4em;
+  }
+  .contact-grid {
+    width: 90%;
+    max-width: 1100px;
+    margin: 2em auto 4em;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    border-radius: 2em;
+    overflow: hidden;
+    .info-side {
+      background-color: $purple-bg;
+      color: $white;
+      padding: 3em 2.1em;
+      h3 {
+        color: $white;
+      }
+      .c-info-grid {
         display: grid;
-        grid-template-columns: 40% 60%;
-        border-radius: 2em;
-        overflow: hidden;
-        .info-side{
-            background-color: $purple-bg;
+        grid-template-columns: 50px auto;
+        padding-bottom: 0.9em;
+        .contact-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: $white-faint4;
+          .icon {
             color: $white;
-            padding: 3em 2.1em;
-            h3{
-                color: $white;
-            }
-            .c-info-grid{
-                display: grid;
-                grid-template-columns: 50px auto;
-                padding-bottom: 0.9em;
-                .contact-icon{
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: $white-faint4;
-                    .icon{
-                        color: $white;
-                    }
-                }
-                .contact-text{
-                    padding-left: 7px;
-                    span{
-                        font-size: 0.85em;
-                        color: $white-faint2;
-                    }
-                    p{
-                        color: $white;
-                        margin-bottom: 0;
-                    }
-                }
-            }
-            .social-icon{
-                width: 45px;
-                height: 45px;
-                border-radius: 5px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: $yellow;
-                transition: 0.3s ease;
-                margin-right: 0.3em;
-                cursor: pointer;
-                .icon{
-                    color: $white;
-                }
-                &:hover{
-                    background-color: $white;
-                    color: $purple-bg-hover;
-                    .icon{
-                        color: $purple-bg-hover;
-                    }
-                }
-                &:active{
-                    transform: scale(1.06);
-                }
-            }
+          }
         }
-        .form-side{
-            background-color: $white;
-            padding: 3em 2.1em;
-            .admin-apply-box {
-              p{
-                opacity: 0.7;
-                font-size: 0.9em;
-              }
-              .reg-card{
-                label{
-                  font-size: 0.7em;
-                  font-weight: 500;
-                  margin: 0.7rem 0 0.2rem;
-                }
-                input, select, textarea{
-                  width: 100%;
-                  padding: 3px 10px;
-                  border-radius: 4px;
-                  transition: 0.2s ease;
-                  border: 1px solid #E6E8EC;
-                  &:hover{
-                    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
-                  }
-                  &:focus{
-                    outline: none;
-                    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.3);
-                    border-color: $purple-bg;
-                  }
-                }
-                select{
-                  padding: 7px 10px;
-                  font-size: 0.9em;
-                  option{
-                    font-size: 0.6em;
-                  }
-                }
-                .password-shower {
-                  float: right;
-                  margin-top: -33px;
-                  margin-right: 10px;
-                  position: relative;
-                  i {
-                    cursor: pointer;
-                  }
-                  @include mediaM(750px) {
-                    margin-top: -28px;
-                  }
-                }
-              }
-              .error-border{
-                border-color: $red;
-              }
-              .reg-button2{
-                @include base-button($purple-bg, $purple-bg-hover);
-                font-size: 0.8em;
-                font-weight: 600;
-                padding: 9px 3vmax;
-                border-radius: 4.5px;
-                border-radius: 4px;
-                box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
-                .icon{
-                    font-size: 0.9em;
-                }
-              }
-            }
+        .contact-text {
+          padding-left: 7px;
+          span {
+            font-size: 0.85em;
+            color: $white-faint2;
+          }
+          p {
+            color: $white;
+            margin-bottom: 0;
+          }
         }
-        @include mediaM(950px) {
-            .info-side{
-                padding: 3em 1.1em;
-            }
-            .form-side{
-                padding: 3em 1.1em;
-            }
+      }
+      .social-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $yellow;
+        transition: 0.3s ease;
+        margin-right: 0.3em;
+        cursor: pointer;
+        .icon {
+          color: $white;
         }
-        @include mediaM(800px) {
-            display: block;
-            .info-side{
-                padding: 2em 2.1em;
-            }
-            .form-side{
-                padding: 2em 2.1em;
-            }
+        &:hover {
+          background-color: $white;
+          color: $purple-bg-hover;
+          .icon {
+            color: $purple-bg-hover;
+          }
         }
+        &:active {
+          transform: scale(1.06);
+        }
+      }
     }
+    .form-side {
+      background-color: $white;
+      padding: 3em 2.1em;
+      .admin-apply-box {
+        p {
+          opacity: 0.7;
+          font-size: 0.9em;
+        }
+        .reg-card {
+          label {
+            font-size: 0.7em;
+            font-weight: 500;
+            margin: 0.7rem 0 0.2rem;
+          }
+          input,
+          select,
+          textarea {
+            width: 100%;
+            padding: 3px 10px;
+            border-radius: 4px;
+            transition: 0.2s ease;
+            border: 1px solid #e6e8ec;
+            &:hover {
+              box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+            }
+            &:focus {
+              outline: none;
+              box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.3);
+              border-color: $purple-bg;
+            }
+          }
+          select {
+            padding: 7px 10px;
+            font-size: 0.9em;
+            option {
+              font-size: 0.6em;
+            }
+          }
+          .password-shower {
+            float: right;
+            margin-top: -33px;
+            margin-right: 10px;
+            position: relative;
+            i {
+              cursor: pointer;
+            }
+            @include mediaM(750px) {
+              margin-top: -28px;
+            }
+          }
+        }
+        .error-border {
+          border-color: $red;
+        }
+        .reg-button2 {
+          @include base-button($purple-bg, $purple-bg-hover);
+          font-size: 0.8em;
+          font-weight: 600;
+          padding: 9px 3vmax;
+          border-radius: 4.5px;
+          border-radius: 4px;
+          box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+          .icon {
+            font-size: 0.9em;
+          }
+        }
+      }
+    }
+    @include mediaM(950px) {
+      .info-side {
+        padding: 3em 1.1em;
+      }
+      .form-side {
+        padding: 3em 1.1em;
+      }
+    }
+    @include mediaM(800px) {
+      display: block;
+      .info-side {
+        padding: 2em 2.1em;
+      }
+      .form-side {
+        padding: 2em 2.1em;
+      }
+    }
+  }
 }

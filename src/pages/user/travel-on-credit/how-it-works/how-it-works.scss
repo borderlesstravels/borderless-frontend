@@ -1,0 +1,38 @@
+@import "../../../../assets/styles/variables.scss";
+
+.how-it-works {
+  padding-top: 80px;
+
+  .choose-grid {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    @include mediaM(850px) {
+      display: block;
+    }
+    .faint {
+      h6 {
+        padding-left: calc(4px + 0.4em);
+        font-size: 1.45em;
+        @include mediaM(50px) {
+          padding-top: 0.5em;
+        }
+      }
+      p {
+        padding-left: calc(4px + 0.4em);
+        @include mediaW(851px) {
+          // font-size: 0.85em;
+        }
+      }
+    }
+    .side-img {
+      padding: 0;
+      img {
+        width: 100%;
+        max-height: 600px;
+        object-fit: contain;
+        position: relative;
+        top: -40px;
+      }
+    }
+  }
+}

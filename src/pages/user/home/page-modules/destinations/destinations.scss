@@ -1,155 +1,153 @@
 @import "../../../../../assets/styles/variables.scss";
 
+.destinations {
+  background-color: #fbf7fc;
+  width: 100%;
+  padding: 3em 0 3em 0;
+  position: relative;
+  .side-margin {
+    padding: 0 0 0 15%;
+    @include mediaM(767px) {
+      padding: 0;
+    }
+  }
+  .deal-case {
+    // width: 100%;
+    // max-width: 250px;
+    margin: 0.3em;
+    .deal-card {
+      width: 96%;
+      max-width: 280px;
+      margin: auto;
 
-.destinations{
-    background-color: #FBF7FC;
-    width: 100%;
-    padding: 3em 0 3em 0;
-    position: relative;
-    .side-margin{
-        padding: 0 0 0 15%;
-        @include mediaM(767px){
-            padding: 0;
-        }
-    }
-    .deal-case{
-        // width: 100%;
-        // max-width: 250px;
-        margin: 0.3em;
-        .deal-card{
-            width: 96%;
-            max-width: 280px;
-            margin: auto;
-    
-            .img-sect{
-                position: relative;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 6px 12px 0 rgba(103, 4, 118, 0.25);
-            }
-            .text-sect{
-                padding: 0.9em 0;
-                h6{
-                    margin-bottom: 0;
-                    font-size: 1rem;
-                    @include mediaW(1200px){
-                        font-size: 1.05em;
-                    }
-                }
-                p{
-                    margin-bottom: 0;
-                    color: $black-faint1;
-                    font-size: 0.8em;
-                    .icon{
-                        font-size: 0.85em;
-                    }
-                }
-            }
-        }
-    }
-    .swiper-pagination-bullet {
-        background-color: #bdbdbd !important;
-        opacity: 1;
-        width: 10px;
-        height: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      .img-sect {
+        position: relative;
         border-radius: 10px;
-        font-size: 0.01em;
-        transition: 0.3s ease;
-    
-        // style for active pagination btn
-        &.swiper-pagination-bullet-active {
-            background-color: #ED6300 !important;
-            width: 10px !important;
+        overflow: hidden;
+        box-shadow: 0 6px 12px 0 rgba(103, 4, 118, 0.25);
+      }
+      .text-sect {
+        padding: 0.9em 0;
+        h6 {
+          margin-bottom: 0;
+          font-size: 1rem;
+          @include mediaW(1200px) {
+            font-size: 1.05em;
+          }
         }
+        p {
+          margin-bottom: 0;
+          color: $black-faint1;
+          font-size: 0.8em;
+          .icon {
+            font-size: 0.85em;
+          }
+        }
+      }
     }
+  }
+  .swiper-pagination-bullet {
+    background-color: #bdbdbd !important;
+    opacity: 1;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 0.01em;
+    transition: 0.3s ease;
+
+    // style for active pagination btn
+    &.swiper-pagination-bullet-active {
+      background-color: #ed6300 !important;
+      width: 10px !important;
+    }
+  }
 }
 
-
-.book-hotel{
-    background-color: $white;
+.book-hotel {
+  background-color: $white;
+  width: 100%;
+  padding: 1em 0 3em;
+  position: relative;
+  .hotel-case {
     width: 100%;
-    padding: 1em 0 3em;
+    padding: 2em 0 2em;
     position: relative;
-    .hotel-case{
+    .bg-curve {
+      width: 80%;
+      height: 100%;
+      right: 0%;
+      top: 0%;
+      border-radius: 10vmax 0 0 0;
+      position: absolute;
+      background: linear-gradient(to right, #fbf7fc, #fbf7fc);
+    }
+    .floating-dots {
+      // position: absolute;
+      width: 50%;
+      max-width: 350px;
+      // left: 0;
+      // top: 0em;
+      img {
         width: 100%;
-        padding: 2em 0 2em;
+      }
+    }
+  }
+  .placed-dots {
+    // position: absolute;
+    position: relative;
+    width: 50%;
+    max-width: 350px;
+    // left: 0;
+    margin-top: -2em;
+    img {
+      width: 100%;
+    }
+  }
+  .explore {
+    text-align: right;
+    button {
+      @include base-button($purple-bg, $purple-bg-hover);
+      padding: 5px 15px;
+      border-radius: 20px;
+      box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
+  .deal-case {
+    // width: 100%;
+    // max-width: 250px;
+    .deal-card {
+      width: 94%;
+      max-width: 340px;
+      margin: auto;
+
+      .img-sect {
         position: relative;
-        .bg-curve{
-            width: 80%;
-            height: 100%;
-            right: 0%;
-            top: 0%;
-            border-radius: 10vmax 0 0 0;
-            position: absolute;
-            background: linear-gradient(to right, #FBF7FC, #FBF7FC);
-        }
-        .floating-dots{
-            // position: absolute;
-            width: 50%;
-            max-width: 350px;
-            // left: 0;
-            // top: 0em;
-            img{
-                width: 100%;
-            }
-        }
-    }
-    .placed-dots{
-        // position: absolute;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 6px 12px 0 rgba(103, 4, 118, 0.25);
+      }
+      .text-sect {
+        padding: 0.9em 0;
         position: relative;
-        width: 50%;
-        max-width: 350px;
-        // left: 0;
-        margin-top: -2em;
-        img{
-            width: 100%;
+        h6 {
+          margin-bottom: 0;
+          font-size: 1rem;
+          @include mediaW(1200px) {
+            font-size: 1.05em;
+          }
         }
-    }
-    .explore{
-        text-align: right;
-        button{
-            @include base-button($purple-bg, $purple-bg-hover);
-            padding: 5px 15px;
-            border-radius: 20px;
-            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.25);
+        p {
+          // margin-bottom: 0;
+          color: $black-faint1;
+          font-size: 0.8em;
+          .icon {
+            font-size: 0.85em;
+          }
         }
+      }
     }
-    .deal-case{
-        // width: 100%;
-        // max-width: 250px;
-        .deal-card{
-            width: 94%;
-            max-width: 340px;
-            margin: auto;
-    
-            .img-sect{
-                position: relative;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 6px 12px 0 rgba(103, 4, 118, 0.25);
-            }
-            .text-sect{
-                padding: 0.9em 0;
-                position: relative;
-                h6{
-                    margin-bottom: 0;
-                    font-size: 1rem;
-                    @include mediaW(1200px){
-                        font-size: 1.05em;
-                    }
-                }
-                p{
-                    // margin-bottom: 0;
-                    color: $black-faint1;
-                    font-size: 0.8em;
-                    .icon{
-                        font-size: 0.85em;
-                    }
-                }
-            }
-        }
-    }
+  }
 }

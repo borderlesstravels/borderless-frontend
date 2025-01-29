@@ -1,0 +1,30 @@
+@import "../../../../assets/styles/variables.scss";
+
+.experience-travel {
+  display: grid;
+  grid-template-columns: 45% 55%;
+
+  .content-1 {
+    height: 750px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .content-2-img-div {
+    height: 500px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .content-data {
+    padding: 40px 60px 0;
+  }
+}

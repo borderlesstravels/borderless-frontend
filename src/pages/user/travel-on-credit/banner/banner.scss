@@ -1,0 +1,106 @@
+@import "../../../../assets/styles/variables.scss";
+
+.travel-credit-banner {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: calc(100vh - 170px);
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 15px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  margin-bottom: 30px;
+
+  @include mediaM(850px) {
+    min-height: calc(100vh - 80px);
+  }
+  @include mediaM(550px) {
+    min-height: calc(100vh - 60px);
+  }
+
+  .img-sect {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    .banner-1 {
+      position: relative;
+      width: 85%;
+      img {
+        height: 500px;
+      }
+    }
+
+    .banner-2 {
+      position: absolute;
+      bottom: 0;
+      right: 50px;
+
+      img {
+        height: 350px;
+      }
+      @include mediaM(1050px) {
+        width: 120%;
+      }
+    }
+  }
+
+  .text-sect {
+    display: flex;
+    align-items: center;
+
+    .main-header {
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-header-div {
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .capsule-div {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .capsule-img {
+      width: auto;
+      height: 70px;
+      object-fit: contain;
+      position: relative;
+      top: -10px;
+    }
+
+    .credit-text {
+      position: relative;
+      right: 20px;
+    }
+
+    .description {
+      margin-bottom: 45px;
+    }
+
+    .travel-button-div {
+      display: flex;
+      justify-content: center;
+    }
+
+    .travel-button {
+      @include base-button($purple-bg, $purple-bg-hover);
+      font-size: 0.9em;
+      font-weight: 600;
+      padding: 12px 61px;
+      border-radius: 30px;
+      box-shadow: 0 10px 20px 0 rgba(103, 4, 118, 0.25);
+      .icon {
+        font-size: 0.9em;
+      }
+    }
+  }
+}

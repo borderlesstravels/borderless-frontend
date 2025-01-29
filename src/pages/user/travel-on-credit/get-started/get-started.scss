@@ -1,0 +1,57 @@
+@import "../../../../assets/styles/variables.scss";
+
+.travel-get-started {
+  background-color: #f0f2f5;
+  padding: 60px 0 60px 8%;
+
+  .travel-get-started-container {
+    background-color: #ffffff;
+    padding: 60px 60px 600px;
+    padding-right: 0;
+    position: relative;
+    border-radius: 10px;
+  }
+
+  .travel-content {
+    max-width: 600px;
+    position: relative;
+  }
+
+  .travel-img-container {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    bottom: 0;
+    overflow: hidden;
+    height: 100%;
+    padding-bottom: 50px;
+  }
+
+  .travel-img {
+    max-height: 400px;
+  }
+
+  .travel-img-1 {
+    max-height: 470px;
+    position: relative;
+    left: 40px;
+    top: 57px;
+  }
+
+  .travel-img-2 {
+    position: relative;
+    bottom: 80px;
+  }
+
+  .travel-img-3 {
+    position: relative;
+    bottom: 160px;
+  }
+
+  .travel-img-4 {
+    position: relative;
+    bottom: 240px;
+  }
+}

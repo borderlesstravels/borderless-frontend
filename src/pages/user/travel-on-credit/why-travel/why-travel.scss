@@ -1,0 +1,98 @@
+@import "../../../../assets/styles/variables.scss";
+
+.travel-why-travel {
+  margin-bottom: 50px;
+
+  .travel-header {
+    text-align: center;
+  }
+
+  .travel-container {
+    background-color: #f5f3fd;
+  }
+
+  .grid-item {
+    overflow: hidden;
+
+    img {
+      height: 300px;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .grid-item-header {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    gap: 5px;
+    margin-bottom: 20px;
+
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+  }
+
+  .travel-grid-1 {
+    padding-left: 8%;
+    display: grid;
+    margin-bottom: 5px;
+    gap: 5px;
+    grid-template-columns: 1fr 1fr 1.4fr 0.5fr;
+
+    .grid-span-row {
+      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 50px 30px;
+      color: white;
+      background-image: linear-gradient(#ffae00, #ed6300);
+    }
+
+    .grid-span-column {
+      grid-column: span 2;
+      padding: 20px 30px;
+      background-image: linear-gradient(to right, #3011bc, #040876);
+
+      div {
+        max-width: 400px;
+      }
+
+      p {
+        color: white;
+      }
+    }
+  }
+
+  .travel-grid-2 {
+    display: grid;
+    padding-left: 8%;
+    gap: 5px;
+    position: relative;
+    grid-template-columns: 1fr 1fr 1.4fr 0.5fr;
+
+    .purple-bg {
+      position: absolute;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background-image: linear-gradient(#c115fe, #660476);
+    }
+
+    .grid-span-column {
+      grid-column: span 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 80px;
+      color: white;
+      position: relative;
+      background-image: linear-gradient(#c115fe, #660476);
+    }
+  }
+}

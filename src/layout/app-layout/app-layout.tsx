@@ -5,7 +5,6 @@ import SubHeader from "./sub-header/sub-header";
 import Footer from "./footer/footer";
 import "./app-layout.scss";
 import Sidebar from "./sidebar/sidebar";
-import UtilityDatALoader from "./utility-loader/utility-loader";
 
 function UserModule() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -37,7 +36,6 @@ function UserModule() {
             <Outlet />
           </div>
           <Footer />
-          {/* <UtilityDatALoader /> */}
         </div>
       </div>
     </div>
